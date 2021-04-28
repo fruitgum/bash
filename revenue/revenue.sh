@@ -1,4 +1,5 @@
 #!/bin/bash
+. ./revenue-ini.sh
 if [[ ! -e revenue.log ]]; then
 	$(touch 'revenue.log')
 	chmod 766 'revenue.log'
@@ -10,7 +11,7 @@ if [[ $(echo $(whoami)) != 'root' ]]; then
 fi
 
 logDate=$(date +%d-%m-%Y' '%H:%M:%S)" "
-export ldate=$(echo $(mysql -uroot -pWKOs6obVo -e"SELECT DATE_FORMAT(NOW(), "%H:%i:%s %d-%m-%Y") AS now") | tail -n2)
+export ldate=$(echo $(mysql $localConnect -e"SELECT DATE_FORMAT(NOW(), "%H:%i:%s %d-%m-%Y") AS now") | tail -n2)
 function checkTimeLaunch {
 		curDate=$(date +%s)
 	if [[ $REVENUE_TIME_START -gt $(($curDate - 600)) ]];then
