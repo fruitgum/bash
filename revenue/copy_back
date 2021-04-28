@@ -1,0 +1,58 @@
+
+interval=$1
+hping=$(echo $(sshpass -p xxxxxx ssh root@$ip -o ConnectTimeout=10 'echo 1'))
+
+# checkUser=$(echo $( sshpass -p xxxxxx ssh root@$ip 'mysql -uroot -pCtHDbCGK.C -Dmysql -e"SELECT count(*) FROM mysql.user u WHERE u.User = '"'rUser'"' as users"') | cut -d ' ' -f2)
+# if [[ $checkUser -eq 0 ]];then
+# 	sshpass -p xxxxxx ssh root@$ip 'mysql -uroot -pCtHDbCGK.C -e"create user "'"rUser"'"@"'"localhost"'" identified by "'"rUserCashRcons"'""'
+# 	sshpass -p xxxxxx ssh root@$ip 'mysql -uroot -pCtHDbCGK.C -e"grant SELECT on ukmclient.* to "'"rUser"'"@"'"localhost"'" identified by "'"rUserCashRcons"'"; flush privileges"'
+# fi
+
+
+if [[ $hping != '1' ]]; then
+echo $cid" offline"
+	mysql -uroot -pWKOs6obVo -Dcons -e'insert into receipt_p(cash_id, count, date, launch_id, reason) values ('$cid', "0", now(), '$lid', "DOWN")'
+else
+	checkdb=$(echo $(sshpass -p xxxxxx ssh root@$ip 'test -e /usr/local/ukmclient' && echo "u" || echo "l"))
+	if [[ $checkdb == 'u' ]]; then
+		db='ukmclient'
+	elif [[ $checkdb == 'l' ]]; then
+		db='lillo'
+	else
+		db=''
+	fi
+	sleep 0.1
+
+	ldateh=$(echo $ldate | cut -d ':' -f1)
+	ldatems=$(echo $ldate | cut -d ':' -f2-3)
+	diff=$(echo $(mysql -uroot -pWKOs6obVo -Dcons -e'select ifnull(diff, 0) as diff from timezone where cash_id='$cid'') | cut -d ' ' -f 2)
+	if { [ -z $diff ] || [ $diff = '' ]; }; then
+		diff=0
+	fi
+	diffhm=$(echo $(mysql -uroot -pWKOs6obVo -Dcons -e'select DATE_FORMAT(time(DATE_ADD(concat(curdate(), " '$ldate'"), INTERVAL '$diff' HOUR)),"%k") as time') | cut -d ' ' -f2)
+	if [[ $diffhm -lt '9' ]]; then
+		diffhm='23'
+	fi
+	time=$diffhm':'$ldatems
+	
+	re='^[0-9]+$'
+
+	if [[ ! -z $db ]]; then
+		query='select count(distinct(global_number)) from trm_out_receipt_header where date between (concat("'$date'", " 00:00:00")) and (concat("'$date'", "'" $time"'"))'
+		sum=$(echo $(timeout 60 sshpass -p xxxxxx ssh root@$ip 'mysql -uroot -pCtHDbCGK.C -D'$db' -e'"'$query'"' 2>&1 | grep -v "Warning: Using a password" | grep -v "Usage"' | tail -n1))
+		echo $cid' sum':$sum' time':$time #>> pos.time
+		if { [ -z $sum ] || [ $sum = '' ]; };then
+			kill $!
+			sum=0
+			state="DOWN"
+		else
+			state="UP"
+		fi
+	else
+		echo $cid' no db!'
+		#mysql -uroot -pWKOs6obVo -Dcons -e'insert into receipt_p(cash_id, count, date, launch_id, reason) values ('$cid', "0", now(), '$lid', "NODB")'
+		state="NODB"
+	fi
+	echo $cid' sum':$sum' time':$time >> export.time
+	mysql -uroot -pWKOs6obVo -Dcons -e'INSERT INTO receipt_p(cash_id, count, date, reason, launch_id) values ('$cid', '$sum', now(), "'$state'", '$lid')'
+fi
