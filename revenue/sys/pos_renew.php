@@ -1,11 +1,6 @@
 <?php
-$oHost="dc-pos03";
-$oUser="rUser";
-$oDBPassword="rUserCashRcons";
-$oDataBaseU="ukmserver";
-
-$conn = mysqli_connect($oHost, $oUser, $oDBPassword, $oDataBaseU);
-$conn2 = mysqli_connect('localhost', 'root', 'WKOs6obVo', 'cons');
+require_once('../phpver/lcstr.php')
+require_once('../phpver/ocstr.php')
 
 if($conn){
   mysqli_query($conn2, "truncate table posinfo");
