@@ -89,7 +89,7 @@ function shiftCheck(){
         err 13
     elif { [[ $OPENID -eq $CLOSEID ]] && [[ $ISMONEY -gt 0 ]]; }; then
         curl -d 'selection=["'"$CASHID"'"]&_'$(date +%s) -d 'message=Смена+была+закрыта+автоматически. Не+забудьте+выполнить+изъятие+и+сверку+итогов+перед+началом+работы' http://dc-pos03/ukm/index.php?r=pos/sendMessage -b PHPSESSID=1 > /dev/null 2>&1
-        echo $(date +%T)' '$CASHID  ' Shift number '$CLOSEID' was closed'
+        echo $(date +%T)' '$CASHID' Shift number '$CLOSEID' was closed'
         mysql $localConnect -e"update shiftJournal set name='"$NAME"', shift_id='"$OPENID"' where cash_id="$CASHID" and date(date) = curdate()"
         err 0
     elif { [[ $OPENID -gt $CLOSEID ]] && [[ $ISMONEY -gt 0 ]]; }; then
