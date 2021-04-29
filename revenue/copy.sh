@@ -8,9 +8,6 @@ POSIP=$3
 lid=$4
 ldate=$5
 date=$6
-POSUSER='root'
-POSPASS='xxxxxx'
-POSDBPASS='CtHDbCGK.C'
 SSHTIMEOUT=30
 POSAUTH="sshpass -p "$POSPASS" ssh -q "$POSUSER"@"$POSIP" -o ConnectTimeout="$SSHTIMEOUT" "
 POSDBAUTH=' -u'$POSUSER' -Dukmclient -p'$POSDBPASS
