@@ -1,0 +1,46 @@
+23:30:18 72113002  Ping...
+23:30:18 72110005  Ping...
+23:30:19 72018001  Ping...
+23:30:19 72113002  Ping OK
+23:30:19 72113002  Checking DB
+23:30:19 72110005  Ping OK
+23:30:19 72110005  Checking DB
+23:30:19 72018001  Ping OK
+23:30:19 72018001  Checking DB
+23:30:19 72113002  DB OK
+23:30:19 72113002   ISMONEY: 0
+23:30:19 72113002  Checking for opened shift
+23:30:19 72110005  DB OK
+23:30:19 72110005   ISMONEY: 0
+23:30:19 72110005  Checking for opened shift
+23:30:20 72018001  DB OK
+23:30:20 72018001   ISMONEY: 0
+23:30:20 72018001  Checking for opened shift
+23:30:20 72113002  Shift is open
+23:30:20 72113002  Checking for unclosed receipt
+23:30:21 72110005   13 (Shift already closed)
+23:30:21 72018001  Shift is open
+23:30:21 72018001  Checking for unclosed receipt
+23:30:21 72113002  All receipts are closed
+23:30:22 72113002  Restarting UKM...
+23:30:22 72018001  All receipts are closed
+23:30:22 72018001  Restarting UKM...
+23:30:31 72018001  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:35 72113002  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:48 72069004  Ping...
+23:31:02 72018001  UKM started successfully
+23:31:06 72113002  UKM started successfully
+23:31:12 72018001  Search for money in cashbox
+23:31:13 72018001  Cashbox is empty
+23:31:16 72113002  Search for money in cashbox
+23:31:17 72113002  Cashbox is empty
+23:31:18 72069004   10 (Pos is unreachable)
+23:32:13 72018001   ISMONEY: 1
+23:32:13 72018001  Checking that shift was closed correctly
+23:32:15 72018001   18 (Failed to close shift)
+23:32:17 72113002   ISMONEY: 1
+23:32:17 72113002  Checking that shift was closed correctly
+23:32:18 72113002  Shift number 18 was closed
+ERROR 1051 (42S02) at line 1: Unknown table 'tals'
+23:32:19 72113002   0 (successfull)
+23:32:19 Done

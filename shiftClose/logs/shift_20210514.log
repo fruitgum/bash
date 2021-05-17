@@ -1,0 +1,66 @@
+23:30:18 72035004  Ping...
+23:30:18 8002002  Ping...
+23:30:18 72035004  Ping OK
+23:30:18 72035004  Checking DB
+23:30:18 72018001  Ping...
+23:30:18 72110005  Ping...
+23:30:18 8002002  Ping OK
+23:30:18 8002002  Checking DB
+23:30:18 72035004  DB OK
+23:30:18 72035004   ISMONEY: 0
+23:30:18 72035004  Checking for opened shift
+23:30:18 8002002  DB OK
+23:30:18 8002002   ISMONEY: 0
+23:30:18 8002002  Checking for opened shift
+23:30:19 72018001  Ping OK
+23:30:19 72018001  Checking DB
+23:30:19 72110005  Ping OK
+23:30:19 72110005  Checking DB
+23:30:19 72035004  Shift is open
+23:30:19 72035004  Checking for unclosed receipt
+23:30:19 72110005  DB OK
+23:30:19 72110005   ISMONEY: 0
+23:30:19 72110005  Checking for opened shift
+23:30:19 8002002  Shift is open
+23:30:19 8002002  Checking for unclosed receipt
+23:30:19 72018001  DB OK
+23:30:19 72018001   ISMONEY: 0
+23:30:19 72018001  Checking for opened shift
+23:30:19 72035004  All receipts are closed
+23:30:20 8002002  All receipts are closed
+23:30:20 72035004  Restarting UKM...
+23:30:20 8002002  Restarting UKM...
+23:30:20 72110005   13 (Shift already closed)
+23:30:20 72018001  Shift is open
+23:30:20 72018001  Checking for unclosed receipt
+23:30:22 72018001  All receipts are closed
+23:30:22 72018001  Restarting UKM...
+23:30:27 72035004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:31 8002002  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:31 72018001  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:47 72007004  Ping...
+23:30:47 72024003  Ping...
+23:30:48 72069004  Ping...
+23:30:58 72035004  UKM started successfully
+23:31:01 8002002  UKM started successfully
+23:31:03 72018001  UKM started successfully
+23:31:08 72035004  Search for money in cashbox
+23:31:09 72035004  Cashbox is empty
+23:31:11 8002002  Search for money in cashbox
+23:31:12 8002002  Cashbox is empty
+23:31:13 72018001  Search for money in cashbox
+23:31:14 72018001  Cashbox is empty
+23:31:17 72007004   10 (Pos is unreachable)
+23:31:18 72024003   10 (Pos is unreachable)
+23:31:18 72069004   10 (Pos is unreachable)
+23:32:09 72035004   ISMONEY: 1
+23:32:09 72035004  Checking that shift was closed correctly
+23:32:09 72035004   18 (Failed to close shift)
+23:32:12 8002002   ISMONEY: 1
+23:32:12 8002002  Checking that shift was closed correctly
+23:32:13 8002002  Shift number 85 was closed
+23:32:13 8002002   0 (successfull)
+23:32:14 72018001   ISMONEY: 1
+23:32:14 72018001  Checking that shift was closed correctly
+23:32:16 72018001   18 (Failed to close shift)
+23:32:16 Done

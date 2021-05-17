@@ -1,0 +1,221 @@
+23:30:16 233001003  Ping...
+23:30:16 72025004  Ping...
+23:30:16 72110005  Ping...
+23:30:17 233001003  Ping OK
+23:30:17 233001003  Checking DB
+23:30:17 72025004  Ping OK
+23:30:17 72025004  Checking DB
+23:30:17 72110005  Ping OK
+23:30:17 72110005  Checking DB
+23:30:17 233001003  DB OK
+23:30:17 233001003  Checking for opened shift
+23:30:17 72110005  DB OK
+23:30:17 72110005  Checking for opened shift
+23:30:17 72025004  DB OK
+23:30:18 72025004  Checking for opened shift
+23:30:19 233001003  Shift is open
+23:30:19 233001003  Checking for unclosed receipt
+23:30:19 72110005  13 (Shift already closed)
+23:30:19 72025004  Shift is open
+23:30:19 72025004  Checking for unclosed receipt
+23:30:20 233001003  All receipts are closed
+23:30:20 233001003  Restarting UKM...
+23:30:21 72025004  All receipts are closed
+23:30:21 72025004  Restarting UKM...
+23:30:31 72025004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:34 233001003  Sleep 30 seconds to make sure ukmclient has been restarted
+23:31:02 72025004  UKM stared successfully
+23:31:02 72025004  Search for money in cashbox
+23:31:04 72025004  Cashbox is not empty. Total: 6442.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    34    0     0  100    34      0    166 --:--:-- --:--:-- --:--:--   166100    34    0     0  100    34      0    160 --:--:-- --:--:-- --:--:--   160
+23:31:06 233001003  UKM stared successfully
+23:31:06 233001003  Search for money in cashbox
+23:31:08 233001003  Cashbox is not empty. Total: 4423.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    35    0     0  100    35      0    190 --:--:-- --:--:-- --:--:--   190
+23:31:25 72025004  Checking that shift was closed correctly
+23:31:27 72025004  18 (Failed to close shift)
+23:31:29 233001003  Checking that shift was closed correctly
+23:31:30 233001003  18 (Failed to close shift)
+Done
+23:42:24 233001003  Ping...
+23:42:24 72025004  Ping...
+23:42:24 72110005  Ping...
+23:42:24 233001003  Ping OK
+23:42:24 233001003  Checking DB
+23:42:24 72025004  Ping OK
+23:42:24 72025004  Checking DB
+23:42:24 72110005  Ping OK
+23:42:24 72110005  Checking DB
+23:42:25 233001003  DB OK
+23:42:25 233001003  Checking for opened shift
+23:42:25 72110005  DB OK
+23:42:25 72110005  Checking for opened shift
+23:42:25 72025004  DB OK
+23:42:25 72025004  Checking for opened shift
+23:42:26 233001003  Shift is open
+23:42:26 233001003  Checking for unclosed receipt
+23:42:26 72110005  13 (Shift already closed)
+23:42:27 72025004  Shift is open
+23:42:27 72025004  Checking for unclosed receipt
+23:42:27 233001003  All receipts are closed
+23:42:27 233001003  Restarting UKM...
+23:42:28 72025004  All receipts are closed
+23:42:28 72025004  Restarting UKM...
+23:42:35 233001003  Sleep 30 seconds to make sure ukmclient has been restarted
+23:42:36 72025004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:43:06 233001003  UKM stared successfully
+23:43:06 233001003  Search for money in cashbox
+23:43:07 72025004  UKM stared successfully
+23:43:07 72025004  Search for money in cashbox
+23:43:08 233001003  Cashbox is not empty. Total: 4423.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    35    0     0  100    35      0    198 --:--:-- --:--:-- --:--:--   197100    35    0     0  100    35      0    197 --:--:-- --:--:-- --:--:--   196
+23:43:09 72025004  Cashbox is not empty. Total: 6442.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    34    0     0  100    34      0    203 --:--:-- --:--:-- --:--:--   203
+23:43:29 233001003  Checking that shift was closed correctly
+23:43:30 72025004  Checking that shift was closed correctly
+23:43:31 233001003  18 (Failed to close shift)
+23:43:32 72025004  18 (Failed to close shift)
+Done
+23:48:07 233001003  Ping...
+23:48:07 72025004  Ping...
+23:48:07 72110005  Ping...
+23:48:07 233001003  Ping OK
+23:48:07 233001003  Checking DB
+23:48:07 72025004  Ping OK
+23:48:07 72025004  Checking DB
+23:48:07 72110005  Ping OK
+23:48:07 72110005  Checking DB
+23:48:08 233001003  DB OK
+23:48:08 233001003  Checking for opened shift
+23:48:08 72110005  DB OK
+23:48:08 72110005  Checking for opened shift
+23:48:08 72025004  DB OK
+23:48:08 72025004  Checking for opened shift
+23:48:09 233001003  Shift is open
+23:48:09 233001003  Checking for unclosed receipt
+23:48:09 72110005  13 (Shift already closed)
+23:48:10 72025004  Shift is open
+23:48:10 72025004  Checking for unclosed receipt
+23:48:10 233001003  All receipts are closed
+23:48:10 233001003  Restarting UKM...
+23:48:11 72025004  All receipts are closed
+23:48:11 72025004  Restarting UKM...
+23:48:19 72025004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:48:25 233001003  Sleep 30 seconds to make sure ukmclient has been restarted
+23:48:50 72025004  UKM stared successfully
+23:48:50 72025004  Search for money in cashbox
+23:48:55 233001003  UKM stared successfully
+23:48:55 233001003  Search for money in cashbox
+23:49:52 72025004  Cashbox is not empty. Total: 6442.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    34    0     0  100    34      0    195 --:--:-- --:--:-- --:--:--   195
+23:49:57 233001003  Cashbox is not empty. Total: 4423.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    35    0     0  100    35      0    197 --:--:-- --:--:-- --:--:--   198
+23:50:13 72025004  Checking that shift was closed correctly
+23:50:15 72025004  18 (Failed to close shift)
+23:50:18 233001003  Checking that shift was closed correctly
+23:50:20 233001003  18 (Failed to close shift)
+Done
+23:53:21 233001003  Ping...
+23:53:21 72025004  Ping...
+23:53:21 72110005  Ping...
+23:53:21 233001003  Ping OK
+23:53:21 233001003  Checking DB
+23:53:21 72025004  Ping OK
+23:53:21 72025004  Checking DB
+23:53:21 72110005  Ping OK
+23:53:21 72110005  Checking DB
+23:53:21 233001003  DB OK
+23:53:22 233001003  Checking for opened shift
+23:53:22 72110005  DB OK
+23:53:22 72110005  Checking for opened shift
+23:53:22 72025004  DB OK
+23:53:22 72025004  Checking for opened shift
+23:53:23 233001003  Shift is open
+23:53:23 233001003  Checking for unclosed receipt
+23:53:23 72110005  13 (Shift already closed)
+23:53:23 72025004  Shift is open
+23:53:23 72025004  Checking for unclosed receipt
+23:53:24 233001003  All receipts are closed
+23:53:24 233001003  Restarting UKM...
+23:53:25 72025004  All receipts are closed
+23:53:25 72025004  Restarting UKM...
+23:53:32 233001003  Sleep 30 seconds to make sure ukmclient has been restarted
+23:53:33 72025004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:54:03 233001003  UKM stared successfully
+23:54:03 233001003  Search for money in cashbox
+23:54:04 72025004  UKM stared successfully
+23:54:04 72025004  Search for money in cashbox
+23:54:05 233001003  Restarting UKM...
+23:54:06 72025004  Restarting UKM...
+23:54:18 72025004  Cashbox is not empty. Total: 6442.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    34    0     0  100    34      0    170 --:--:-- --:--:-- --:--:--   170
+23:54:19 233001003  Cashbox is not empty. Total: 4423.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    35    0     0  100    35      0    208 --:--:-- --:--:-- --:--:--   209
+23:54:40 72025004  Checking that shift was closed correctly
+23:54:41 233001003  Checking that shift was closed correctly
+23:54:42 72025004  18 (Failed to close shift)
+23:54:43 233001003  18 (Failed to close shift)
+Done
+23:55:56 233001003  Ping...
+23:55:56 72025004  Ping...
+23:55:56 72110005  Ping...
+23:55:57 233001003  Ping OK
+23:55:57 233001003  Checking DB
+23:55:57 72025004  Ping OK
+23:55:57 72025004  Checking DB
+23:55:57 72110005  Ping OK
+23:55:57 72110005  Checking DB
+23:55:57 233001003  DB OK
+23:55:57 233001003  Checking for opened shift
+23:55:57 72110005  DB OK
+23:55:57 72110005  Checking for opened shift
+23:55:57 72025004  DB OK
+23:55:57 72025004  Checking for opened shift
+23:55:58 233001003  Shift is open
+23:55:58 233001003  Checking for unclosed receipt
+23:55:59 72110005  13 (Shift already closed)
+23:55:59 72025004  Shift is open
+23:55:59 72025004  Checking for unclosed receipt
+23:55:59 233001003  All receipts are closed
+23:55:59 233001003  Restarting UKM...
+23:56:00 72025004  All receipts are closed
+23:56:00 72025004  Restarting UKM...
+23:56:07 233001003  Sleep 30 seconds to make sure ukmclient has been restarted
+23:56:08 72025004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:56:38 233001003  UKM stared successfully
+23:56:38 233001003  Search for money in cashbox
+23:56:39 72025004  UKM stared successfully
+23:56:39 72025004  Search for money in cashbox
+23:56:40 233001003  Restarting UKM...
+23:56:40 72025004  Restarting UKM...
+23:57:48 72025004  Cashbox is not empty. Total: 6442.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    34    0     0  100    34      0    176 --:--:-- --:--:-- --:--:--   176
+23:57:50 233001003  Cashbox is not empty. Total: 4423.0000
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    35    0     0  100    35      0    192 --:--:-- --:--:-- --:--:--   192100    35    0     0  100    35      0    191 --:--:-- --:--:-- --:--:--   190
+23:58:10 72025004  Restarting UKM...
+23:58:12 233001003  Restarting UKM...
+23:59:17 72025004  Checking that shift was closed correctly
+23:59:19 72025004  18 (Failed to close shift)
+23:59:21 233001003  Checking that shift was closed correctly
+23:59:23 233001003  18 (Failed to close shift)
+Done

@@ -11,6 +11,7 @@ CHECKSCORE=0
 
 CASHID=$1
 POSIP=$2
+BUSH=$3
 
 POSUSER='root'
 POSPASS='xxxxxx'
@@ -18,6 +19,8 @@ POSDBPASS='CtHDbCGK.C'
 SSHTIMEOUT=30
 POSAUTH="sshpass -p "$POSPASS" ssh -q "$POSUSER"@"$POSIP" -o ConnectTimeout="$SSHTIMEOUT" "
 POSDBAUTH=' -u'$POSUSER' -Dukmclient -p'$POSDBPASS
+
+$POSAUTH' mysql'$POSDBAUTH' -e"update trm_auth_local_storage set deleted=1, version=0 where user=9999"' 
 
 function err(){
     case $* in
@@ -37,10 +40,12 @@ function err(){
             ;;
         18) code=$*" (Failed to close shift)"
             ;;
+        20) code=$*" (Failed to create tals)"
+            ;;
         *) code='-1 (undefined error: '$CHECKSCORE')'
     esac
     mysql $localConnect -e'update shiftJournal set code='$*' where cash_id = '$CASHID''
-    echo $(date +%T)' '$CASHID'  '$code
+    echo $(date +%T)' '$CASHID'   '$code
     exit 0
 }
 
@@ -61,7 +66,7 @@ checkPos
 
 function dbCheck(){
     echo $(date +%T)' '$CASHID  ' Checking DB'
-    DBCHECK=$(echo $($POSAUTH 'mysql'$POSDBAUTH' -e"select 1 from trm_in_pos"' 2>&1 | grep -v "FATAL")  | awk '{print $2}')
+    DBCHECK=$(echo $($POSAUTH 'mysql -sN'$POSDBAUTH' -e"select 1 from trm_in_pos"' 2>&1 ))
     if [[ $DBCHECK -eq '1' ]]; then
         POSDB=1
         CHECKSCORE=$(($CHECKSCORE+1))
@@ -76,7 +81,7 @@ dbCheck
 
 
 function shiftCheck(){
-    echo $(date +%T)' '$CASHID' ISMONEY: '$ISMONEY
+    echo $(date +%T)' '$CASHID'   ISMONEY: '$ISMONEY
     if [[ $ISMONEY -eq 0 ]]; then
         echo $(date +%T)' '$CASHID  ' Checking for opened shift'
     else
@@ -84,13 +89,13 @@ function shiftCheck(){
     fi
     OPENID=$(echo $($POSAUTH 'mysql -sN'$POSDBAUTH' -e"select max(id) as id from trm_out_shift_open"'))
     CLOSEID=$(echo $($POSAUTH 'mysql -sN'$POSDBAUTH' -e"select max(id) as id from trm_out_shift_close"'))
-    NAME=$(echo $($POSAUTH 'mysql -sN'$POSDBAUTH' -e"select user_name from trm_out_shift_open so join trm_out_login l on so.login=l.id where so.id="'$OPENID'"'))
+    #NAME=$(echo $($POSAUTH 'mysql -sN'$POSDBAUTH' -e"select user_name from trm_out_shift_open so join trm_out_login l on so.login=l.id where so.id="'$OPENID'"'))
     if { [[ $OPENID -eq $CLOSEID ]] && [[ $ISMONEY -eq 0 ]]; }; then
         err 13
     elif { [[ $OPENID -eq $CLOSEID ]] && [[ $ISMONEY -gt 0 ]]; }; then
         curl -d 'selection=["'"$CASHID"'"]&_'$(date +%s) -d 'message=Смена+была+закрыта+автоматически. Не+забудьте+выполнить+изъятие+и+сверку+итогов+перед+началом+работы' http://dc-pos03/ukm/index.php?r=pos/sendMessage -b PHPSESSID=1 > /dev/null 2>&1
-        echo $(date +%T)' '$CASHID' Shift number '$CLOSEID' was closed'
-        mysql $localConnect -e"update shiftJournal set name='"$NAME"', shift_id='"$OPENID"' where cash_id="$CASHID" and date(date) = curdate()"
+        echo $(date +%T)' '$CASHID  ' Shift number '$CLOSEID' was closed'
+        #$POSAUTH' mysql'$POSDBAUTH' -e"drop table tals"'
         err 0
     elif { [[ $OPENID -gt $CLOSEID ]] && [[ $ISMONEY -gt 0 ]]; }; then
         err 18
@@ -117,7 +122,7 @@ function checkReceipt(){
             echo $(date +%T)' '$CASHID  ' All receipts are closed'
         else
             echo $(date +%T)' '$CASHID  ' Receipt found'
-            $POSAUTH' mysql'$POSDBAUTH' -e"insert into trm_out_receipt_footer values("'"$CASHID"'", "'"$RECEIPTHEAD"'", 1, now(), null, 0, 0)"'
+            $POSAUTH' mysql'$POSDBAUTH' -e"insert into trm_out_receipt_footer values("'"$CASHID"'", "'"$RECEIPTHEAD"'", 1, now(), 0, 0, 0)"'
             echo $(date +%T)' '$CASHID  ' Restarting UKM...'
             $POSAUTH "/etc/init.d/ukmclient restart"
             rCounter=$(($rCounter+1))
@@ -133,7 +138,7 @@ checkReceipt
 function ukmCheck(){
 UKMCHECK=$(echo $($POSAUTH" ps -a | grep ukmclient | awk '{print $1}'"))
 UKMLOGFILE="/usr/local/ukmclient/logs/"$(date +%Y)"/"$(date +%m)"/"$(date +%Y-%m-%d)".log"
-LOGCHECK=$(echo $($POSAUTH "tail -n 20 "$UKMLOGFILE" | grep 'FATAL' | head -n1" ))
+LOGCHECK=$(echo $($POSAUTH" tail -n 20 "$UKMLOGFILE" | grep 'FATAL' | head -n1"))
 if [[ $UKMCHECK ]]; then
     if [[ $LOGCHECK ]]; then
         echo $LOGCHECK
@@ -142,7 +147,7 @@ if [[ $UKMCHECK ]]; then
     else
         POSUKM=1
         CHECKSCORE=$(($CHECKSCORE+1))
-        echo $(date +%T)' '$CASHID  ' UKM stared successfully'
+        echo $(date +%T)' '$CASHID  ' UKM started successfully'
     fi
     sleep 10
 else
@@ -154,6 +159,7 @@ fi
 
 function client(){
     if [[ $ISLOGIN -eq 0 ]]; then
+        LOGIN=$(echo $($POSAUTH' mysql -sN'$POSDBAUTH' -e"select max(id) from trm_out_login"'))
         echo $(date +%T)' '$CASHID  ' Restarting UKM...'
         $POSAUTH "/etc/init.d/ukmclient restart"
         echo $(date +%T)' '$CASHID  ' Sleep 30 seconds to make sure ukmclient has been restarted'
@@ -166,16 +172,8 @@ function client(){
 }
 client
 
-function tals(){
-    $CREATESQL="CREATE TABLE tals AS SELECT * trm_auth_local_storage"
-    $POSAUTH' mysql'$POSDBAUTH' -e"'$CREATESQL'"'
-    $RESTORESQL="INSERT INTO trm_auth_local_storage SELECT * FROM tals"
-    $POSAUTH' mysql'$POSDBAUTH' -e"'$RESTORESQL'"'
-    $DROPSQL="DROP TABLE tals"
-    $POSAUTH' mysql'$POSDBAUTH' -e"'$DROPSQL'"'
-}
-
 function cash(){
+    t=0
     echo $(date +%T)' '$CASHID  ' Search for money in cashbox'
     USERID=$(echo $($POSAUTH' mysql -sN'$POSDBAUTH' -e"select min(user) from trm_auth_local_storage where deleted=0"'))
     MONEYCHECK=$(echo $($POSAUTH' mysql'$POSDBAUTH' -e"select ifnull((select sum(amount) from trm_auth_local_storage where deleted=0), 0) as amount "') | awk '{print $2}')
@@ -186,7 +184,22 @@ function cash(){
         echo $(date +%T)' '$CASHID  ' Cashbox is empty'
     elif { [[ $AMOUNTDECI -gt 0 ]] || [[ $AMOUNTINT -gt 0 ]]; }; then
         NMONEY='-'$MONEYCHECK
-        $POSAUTH' mysql'$POSDBAUTH' -e"REPLACE INTO trm_auth_local_storage values("'"$CASHID"'", 0, 9999, "'"$NMONEY"'", 0, 0)"'
+        $TALSCHECK=$(echo $(mysql -uroot -pCtHDbCGK.C -Dukmclient -e'select * from tals' 2>&1) | cut -d ' ' -f1)
+        if [[ $TALSCHECK == 'ERROR' ]]; then
+            echo $(date +%T)' '$CASHID  ' Creating temporary table tals'
+            $POSAUTH' mysql'$POSDBAUTH' -e"CREATE TABLE tals AS SELECT * FROM trm_auth_local_storage"'
+            if [[ $t -eq 3 ]]; then
+                err 20
+            else
+                t=$(($t+1))
+                cash
+            fi
+        else
+            $POSAUTH' mysql'$POSDBAUTH' -e"truncate table tals; INSERT INTO tals select * trm_auth_local_storage"'
+        fi
+        # $POSAUTH' mysql'$POSDBAUTH' -e"CREATE TABLE tals AS SELECT * FROM trm_auth_local_storage"'
+        # $POSAUTH' mysql'$POSDBAUTH' -e"CREATE TABLE tals AS SELECT * FROM trm_auth_local_storage"'
+        $POSAUTH' mysql'$POSDBAUTH' -e"truncate table trm_auth_local_storage"'
         ISMONEY=2
         echo $(date +%T)' '$CASHID  ' Cashbox is not empty. Total: '$MONEYCHECK
     fi
@@ -199,9 +212,9 @@ fi
 
 if [[ $CHECKSCORE == 6 ]]; then
     curl -d 'selection=["'"$CASHID"'"]&_'$(date +%s) http://dc-pos03/ukm/index.php?r=pos/closeShift -b PHPSESSID=1 > /dev/null 2>&1
-    sleep 30
+    sleep 60
     if [[ $ISMONEY -eq 2 ]]; then
-        $POSAUTH' mysql'$POSDBAUTH' -e"REPLACE INTO trm_auth_local_storage values("'"$CASHID"'", 0, 9999, 0, 0, 0)"'
+        $POSAUTH' mysql'$POSDBAUTH' -e"insert into trm_auth_local_storage select * from tals"'
         ISMONEY=3
     fi
     shiftCheck

@@ -1,0 +1,576 @@
+23:30:05 1006001  Ping...
+23:30:05 1006007  Ping...
+23:30:05 1006008  Ping...
+23:30:05 1006009  Ping...
+23:30:05 1006010  Ping...
+23:30:05 1007003  Ping...
+23:30:05 1007004  Ping...
+23:30:05 1007005  Ping...
+23:30:05 72001028  Ping...
+23:30:05 72001029  Ping...
+23:30:05 1006007  Ping OK
+23:30:05 1006007  Checking DB
+23:30:05 1006001  Ping OK
+23:30:05 1006008  Ping OK
+23:30:05 72001031  Ping...
+23:30:05 1006001  Checking DB
+23:30:05 1006008  Checking DB
+23:30:05 1006009  Ping OK
+23:30:05 1006009  Checking DB
+23:30:05 72001032  Ping...
+23:30:05 72001033  Ping...
+23:30:05 72006001  Ping...
+23:30:05 72006004  Ping...
+23:30:05 1006010  Ping OK
+23:30:05 1006010  Checking DB
+23:30:05 72006005  Ping...
+23:30:05 72006007  Ping...
+23:30:05 72006009  Ping...
+23:30:05 1006007  DB OK
+23:30:05 1006007  Checking for opened shift
+23:30:06 72007002  Ping...
+23:30:06 1006009  DB OK
+23:30:06 1006009  Checking for opened shift
+23:30:06 1006008  DB OK
+23:30:06 1006008  Checking for opened shift
+23:30:06 72007003  Ping...
+23:30:06 1006001  DB OK
+23:30:06 72007004  Ping...
+23:30:06 1006001  Checking for opened shift
+23:30:06 72012002  Ping...
+23:30:06 72012005  Ping...
+23:30:06 72012006  Ping...
+23:30:06 72012010  Ping...
+23:30:06 72023002  Ping...
+23:30:06 1006010  DB OK
+23:30:06 1006010  Checking for opened shift
+23:30:06 72023003  Ping...
+23:30:06 72006001  Ping OK
+23:30:06 72006001  Checking DB
+23:30:06 72023005  Ping...
+23:30:06 72006004  Ping OK
+23:30:06 72006004  Checking DB
+23:30:06 72023006  Ping...
+23:30:06 72006005  Ping OK
+23:30:06 72006005  Checking DB
+23:30:06 72023007  Ping...
+23:30:06 72031002  Ping...
+23:30:06 72006009  Ping OK
+23:30:06 72006009  Checking DB
+23:30:06 72031003  Ping...
+23:30:06 72006007  Ping OK
+23:30:06 72006007  Checking DB
+23:30:06 72031004  Ping...
+23:30:06 72031009  Ping...
+23:30:06 72001028  Ping OK
+23:30:06 72001028  Checking DB
+23:30:06 72048003  Ping...
+23:30:06 72001032  Ping OK
+23:30:06 72001032  Checking DB
+23:30:06 72048004  Ping...
+23:30:06 72048005  Ping...
+23:30:06 72054003  Ping...
+23:30:06 72012010  Ping OK
+23:30:06 72012010  Checking DB
+23:30:06 72063001  Ping...
+23:30:06 72012006  Ping OK
+23:30:06 72012006  Checking DB
+23:30:06 72063002  Ping...
+23:30:06 72012005  Ping OK
+23:30:06 72012005  Checking DB
+23:30:06 72012002  Ping OK
+23:30:06 72012002  Checking DB
+ERROR23:30:06 72063005  Ping...
+23:30:06 72006001  DB OK
+23:30:06 72006001  Checking for opened shift
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1861' at line 1
+23:30:07 72080001  Ping...
+ERROR23:30:07 72006004  DB OK
+23:30:07 72006004  Checking for opened shift
+23:30:07 72048003  Ping OK
+23:30:07 1006009  13 (Shift already closed)
+23:30:07 72048003  Checking DB
+23:30:07 72080002  Ping...
+23:30:07 72006005  DB OK
+23:30:07 72006005  Checking for opened shift
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1711' at line 1
+23:30:07 72048005  Ping OK
+23:30:07 72048005  Checking DB
+23:30:07 72080007  Ping...
+23:30:07 1006007  13 (Shift already closed)
+23:30:07 72048004  Ping OK
+23:30:07 72048004  Checking DB
+23:30:07 72084001  Ping...
+23:30:07 72084003  Ping...
+23:30:07 72006007  DB OK
+23:30:07 72006007  Checking for opened shift
+23:30:07 72006009  DB OK
+23:30:07 72006009  Checking for opened shift
+23:30:07 72054003  Ping OK
+23:30:07 72054003  Checking DB
+23:30:07 72084005  Ping...
+23:30:07 72031002  Ping OK
+23:30:07 72031002  Checking DB
+23:30:07 72023002  Ping OK
+23:30:07 72023002  Checking DB
+23:30:07 72080001  Ping OK
+23:30:07 72080001  Checking DB
+23:30:07 72088003  Ping...
+23:30:07 72031004  Ping OK
+23:30:07 72031004  Checking DB
+23:30:07 72023005  Ping OK
+23:30:07 72023005  Checking DB
+ERROR23:30:07 72088004  Ping...
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=164' at line 1
+23:30:07 72031009  Ping OK
+23:30:07 72088006  Ping...
+23:30:07 72031003  Ping OK
+23:30:07 72031009  Checking DB
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2027' at line 1
+23:30:07 72031003  Checking DB
+23:30:07 72080002  Ping OK
+23:30:07 72080002  Checking DB
+23:30:07 1006008  13 (Shift already closed)
+23:30:07 72048005  DB OK
+23:30:07 1006001  13 (Shift already closed)
+23:30:07 72048005  Checking for opened shift
+23:30:07 72088008  Ping...
+23:30:07 72023006  Ping OK
+23:30:07 72023003  Ping OK
+23:30:07 72023007  Ping OK
+23:30:07 72023006  Checking DB
+23:30:07 72023003  Checking DB
+23:30:07 72023007  Checking DB
+23:30:07 72117002  Ping...
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=572' at line 1
+23:30:07 72048003  DB OK
+23:30:07 72048003  Checking for opened shift
+23:30:07 72048004  DB OK
+23:30:07 72048004  Checking for opened shift
+23:30:07 72117007  Ping...
+23:30:07 72012010  DB OK
+23:30:07 72012010  Checking for opened shift
+23:30:07 72012006  DB OK
+23:30:07 72012006  Checking for opened shift
+23:30:07 1006010  13 (Shift already closed)
+23:30:07 72080001  DB OK
+23:30:07 72080001  Checking for opened shift
+23:30:07 72117008  Ping...
+23:30:07 72001028  DB OK
+23:30:07 72117009  Ping...
+23:30:07 72054003  DB OK
+23:30:07 72001028  Checking for opened shift
+23:30:07 72054003  Checking for opened shift
+23:30:07 72001032  DB OK
+23:30:07 72001032  Checking for opened shift
+23:30:07 72120001  Ping...
+23:30:07 72012005  DB OK
+23:30:07 72012005  Checking for opened shift
+23:30:07 72120007  Ping...
+23:30:07 72080002  DB OK
+23:30:07 72080002  Checking for opened shift
+23:30:07 72120008  Ping...
+23:30:07 72012002  DB OK
+23:30:07 72012002  Checking for opened shift
+23:30:07 72117007  Ping OK
+23:30:07 72117007  Checking DB
+23:30:07 72120009  Ping...
+23:30:07 72117002  Ping OK
+23:30:07 72117002  Checking DB
+23:30:07 205001001  Ping...
+23:30:07 72117008  Ping OK
+23:30:07 72117008  Checking DB
+23:30:07 205001003  Ping...
+23:30:07 72117009  Ping OK
+23:30:07 72117009  Checking DB
+23:30:07 205001004  Ping...
+23:30:07 72084001  Ping OK
+23:30:07 205001005  Ping...
+23:30:07 72084001  Checking DB
+23:30:07 72031002  DB OK
+23:30:07 72031002  Checking for opened shift
+23:30:08 72084003  Ping OK
+23:30:08 72084003  Checking DB
+23:30:08 207001001  Ping...
+23:30:08 72031004  DB OK
+23:30:08 72031004  Checking for opened shift
+23:30:08 72084005  Ping OK
+23:30:08 72084005  Checking DB
+23:30:08 205001001  Ping OK
+23:30:08 205001001  Checking DB
+23:30:08 207001002  Ping...
+23:30:08 72117007  DB OK
+23:30:08 72117007  Checking for opened shift
+23:30:08 72088006  Ping OK
+23:30:08 205001003  Ping OK
+23:30:08 205001003  Checking DB
+23:30:08 72088006  Checking DB
+23:30:08 72117008  DB OK
+23:30:08 72117008  Checking for opened shift
+23:30:08 72117009  DB OK
+23:30:08 72117009  Checking for opened shift
+23:30:08 205001004  Ping OK
+23:30:08 205001004  Checking DB
+23:30:08 72088004  Ping OK
+23:30:08 207001003  Ping...
+23:30:08 72088004  Checking DB
+23:30:08 72088008  Ping OK
+23:30:08 72088008  Checking DB
+23:30:08 72117002  11 (DB is unreachable)
+23:30:08 205001005  Ping OK
+23:30:08 205001005  Checking DB
+23:30:08 207002001  Ping...
+23:30:08 72031003  DB OK
+23:30:08 72031003  Checking for opened shift
+23:30:08 72031009  DB OK
+23:30:08 72031009  Checking for opened shift
+23:30:08 207002002  Ping...
+23:30:08 72088003  Ping OK
+23:30:08 72088003  Checking DB
+23:30:08 207001001  Ping OK
+23:30:08 207001001  Checking DB
+23:30:08 207002003  Ping...
+23:30:08 207002004  Ping...
+23:30:08 207001002  Ping OK
+23:30:08 205001001  DB OK
+23:30:08 207001002  Checking DB
+23:30:08 205001001  Checking for opened shift
+23:30:08 209001002  Ping...
+23:30:08 205001003  DB OK
+23:30:08 205001003  Checking for opened shift
+23:30:08 209001003  Ping...
+23:30:08 72023002  DB OK
+23:30:08 207001003  Ping OK
+23:30:08 72023002  Checking for opened shift
+23:30:08 207001003  Checking DB
+23:30:08 205001004  DB OK
+23:30:08 205001004  Checking for opened shift
+23:30:08 209001004  Ping...
+23:30:08 205001005  DB OK
+23:30:08 205001005  Checking for opened shift
+23:30:08 72023005  DB OK
+23:30:08 72120007  Ping OK
+23:30:08 211001003  Ping...
+23:30:08 72023005  Checking for opened shift
+23:30:08 72120007  Checking DB
+23:30:08 72120001  Ping OK
+23:30:08 72120008  Ping OK
+23:30:08 72120008  Checking DB
+23:30:08 72120001  Checking DB
+23:30:08 207001001  DB OK
+23:30:08 207001001  Checking for opened shift
+23:30:08 72023007  DB OK
+23:30:08 72023006  DB OK
+23:30:08 72023007  Checking for opened shift
+23:30:08 72023006  Checking for opened shift
+23:30:08 211001004  Ping...
+23:30:08 72120009  Ping OK
+23:30:08 207001002  DB OK
+23:30:08 207001002  Checking for opened shift
+23:30:08 72120009  Checking DB
+23:30:08 72023003  DB OK
+ERROR23:30:08 72023003  Checking for opened shift
+23:30:08 211001006  Ping...
+23:30:08 211002001  Ping...
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1328' at line 1
+ERROR23:30:08 207001003  DB OK
+23:30:08 211002002  Ping...
+23:30:08 207001003  Checking for opened shift
+23:30:08 72080001  13 (Shift already closed)
+ERROR23:30:08 211002003  Ping...
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2116' at line 1
+23:30:08 72048003  13 (Shift already closed)
+23:30:08 211002004  Ping...
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=294' at line 1
+ERROR23:30:08 213001002  Ping...
+23:30:08 72054003  13 (Shift already closed)
+23:30:08 213001003  Ping...
+ERRORERROR23:30:08 211001003  Ping OK
+23:30:08 211001003  Checking DB
+23:30:08 213001004  Ping...
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=315' at line 1
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2130' at line 1
+ERROR23:30:08 72006001  13 (Shift already closed)
+23:30:08 213002002  Ping...
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=544' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1900' at line 1
+23:30:08 72084001  DB OK
+23:30:08 72084003  DB OK
+23:30:08 72084003  Checking for opened shift
+23:30:08 213002003  Ping...
+23:30:08 72084001  Checking for opened shift
+23:30:08 72088004  DB OK
+23:30:08 72117009  13 (Shift already closed)
+23:30:08 72088004  Checking for opened shift
+23:30:08 211001004  Ping OK
+23:30:08 72117008  13 (Shift already closed)
+23:30:08 211001004  Checking DB
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2291' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=3057' at line 1
+23:30:08 215002001  Ping...
+23:30:08 72088006  DB OK
+23:30:08 72088006  Checking for opened shift
+23:30:08 211001006  Ping OK
+23:30:08 72048005  13 (Shift already closed)
+23:30:08 72006004  13 (Shift already closed)
+23:30:08 211001006  Checking DB
+23:30:08 209001003  Ping OK
+23:30:08 72080002  13 (Shift already closed)
+23:30:08 209001003  Checking DB
+ERROR23:30:08 72088008  DB OK
+23:30:08 215002002  Ping...
+23:30:08 72088008  Checking for opened shift
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2610' at line 1
+23:30:08 209001004  Ping OK
+23:30:08 72084005  DB OK
+23:30:08 209001004  Checking DB
+ERROR23:30:08 72084005  Checking for opened shift
+23:30:08 215002003  Ping...
+ERROR23:30:08 72006007  13 (Shift already closed)
+23:30:08 211002003  Ping OK
+23:30:08 211002003  Checking DB
+23:30:08 72088003  DB OK
+23:30:08 72088003  Checking for opened shift
+23:30:08 211002001  Ping OK
+23:30:08 211002001  Checking DB
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2140' at line 1
+23:30:08 215002005  Ping...
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2098' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1468' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1255' at line 1
+23:30:09 72006005  13 (Shift already closed)
+23:30:09 211002002  Ping OK
+23:30:09 72048004  13 (Shift already closed)
+23:30:09 211002002  Checking DB
+23:30:09 205001001  13 (Shift already closed)
+23:30:09 219001001  Ping...
+ERROR23:30:09 72117007  13 (Shift already closed)
+23:30:09 219001003  Ping...
+23:30:09 211002004  Ping OK
+23:30:09 211002004  Checking DB
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=323' at line 1
+23:30:09 219001004  Ping...
+ERRORERROR23:30:09 205001004  13 (Shift already closed)
+23:30:09 211001003  DB OK
+23:30:09 211001003  Checking for opened shift
+23:30:09 222002001  Ping...
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=415' at line 1
+23:30:09 222002002  Ping...
+23:30:09 205001005  13 (Shift already closed)
+ERROR23:30:09 209001002  Ping OK
+23:30:09 222002003  Ping...
+23:30:09 209001002  Checking DB
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1063' at line 1
+23:30:09 72006009  13 (Shift already closed)
+ERROR23:30:09 222002004  Ping...
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=53' at line 1
+23:30:09 211001006  DB OK
+23:30:09 211001006  Checking for opened shift
+23:30:09 233001007  Ping...
+23:30:09 205001003  13 (Shift already closed)
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1374' at line 1
+23:30:09 207001001  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1396' at line 1
+23:30:09 211001004  DB OK
+23:30:09 213002002  Ping OK
+23:30:09 213002002  Checking DB
+23:30:09 211001004  Checking for opened shift
+23:30:09 215002005  Ping OK
+23:30:09 215002005  Checking DB
+23:30:09 72120007  DB OK
+23:30:09 215002002  Ping OK
+23:30:09 211002003  DB OK
+23:30:09 72120007  Checking for opened shift
+23:30:09 215002002  Checking DB
+23:30:09 211002003  Checking for opened shift
+23:30:09 72120008  DB OK
+23:30:09 72120008  Checking for opened shift
+23:30:09 213001003  Ping OK
+23:30:09 207001002  13 (Shift already closed)
+ERROR23:30:09 213001003  Checking DB
+23:30:09 219001003  Ping OK
+23:30:09 219001003  Checking DB
+23:30:09 213001004  Ping OK
+23:30:09 72120001  DB OK
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=142' at line 1
+23:30:09 211002001  DB OK
+23:30:09 213001004  Checking DB
+23:30:09 211002001  Checking for opened shift
+23:30:09 72120001  Checking for opened shift
+23:30:09 207001003  13 (Shift already closed)
+23:30:09 211002002  DB OK
+23:30:09 211002002  Checking for opened shift
+23:30:09 219001004  Ping OK
+23:30:09 219001004  Checking DB
+23:30:09 72120009  DB OK
+23:30:09 72120009  Checking for opened shift
+23:30:09 213002003  Ping OK
+23:30:09 213002003  Checking DB
+23:30:09 209001003  DB OK
+23:30:09 209001003  Checking for opened shift
+23:30:09 211002004  DB OK
+23:30:09 211002004  Checking for opened shift
+23:30:09 209001004  DB OK
+23:30:09 213001002  Ping OK
+23:30:09 209001004  Checking for opened shift
+23:30:09 213001002  Checking DB
+23:30:09 219001001  Ping OK
+23:30:09 219001001  Checking DB
+23:30:09 215002001  Ping OK
+23:30:09 215002001  Checking DB
+23:30:09 215002003  Ping OK
+23:30:09 215002003  Checking DB
+23:30:09 215002005  DB OK
+23:30:09 215002005  Checking for opened shift
+23:30:09 215002002  DB OK
+23:30:09 215002002  Checking for opened shift
+23:30:09 219001003  DB OK
+23:30:09 219001003  Checking for opened shift
+23:30:09 213002002  DB OK
+23:30:09 233001007  Ping OK
+23:30:09 213002002  Checking for opened shift
+23:30:09 233001007  Checking DB
+23:30:09 209001002  DB OK
+23:30:09 209001002  Checking for opened shift
+23:30:09 219001004  DB OK
+23:30:09 222002001  Ping OK
+23:30:09 222002001  Checking DB
+23:30:09 219001004  Checking for opened shift
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1721' at line 1
+23:30:09 219001001  DB OK
+23:30:09 219001001  Checking for opened shift
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=104' at line 1
+23:30:10 72012002  13 (Shift already closed)
+23:30:10 213001003  DB OK
+23:30:10 213001003  Checking for opened shift
+23:30:10 72012010  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2808' at line 1
+23:30:10 213001004  DB OK
+23:30:10 72031004  13 (Shift already closed)
+23:30:10 213001004  Checking for opened shift
+23:30:10 213002003  DB OK
+23:30:10 213002003  Checking for opened shift
+ERRORERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1330' at line 1
+ERRORERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=564' at line 1
+23:30:10 211001003  13 (Shift already closed)
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2987' at line 1
+23:30:10 72012005  13 (Shift already closed)
+23:30:10 233001007  DB OK
+23:30:10 72031002  13 (Shift already closed)
+23:30:10 233001007  Checking for opened shift
+23:30:10 213001002  DB OK
+23:30:10 213001002  Checking for opened shift
+ERROR23:30:10 215002001  DB OK
+23:30:10 215002001  Checking for opened shift
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=275' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=3033' at line 1
+ERROR23:30:10 72012006  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=221' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=990' at line 1
+23:30:10 211002003  13 (Shift already closed)
+23:30:10 215002003  DB OK
+23:30:10 215002003  Checking for opened shift
+23:30:10 211001004  13 (Shift already closed)
+23:30:10 211001006  13 (Shift already closed)
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=239' at line 1
+23:30:10 72031009  13 (Shift already closed)
+ERRORERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2618' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=259' at line 1
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2864' at line 1
+ERROR23:30:10 215002005  13 (Shift already closed)
+23:30:10 72001032  13 (Shift already closed)
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=892' at line 1
+23:30:10 222002001  DB OK
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=3046' at line 1
+23:30:10 222002001  Checking for opened shift
+23:30:10 211002002  13 (Shift already closed)
+23:30:10 72001028  13 (Shift already closed)
+23:30:10 72031003  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=478' at line 1
+ERROR23:30:10 219001003  13 (Shift already closed)
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=115' at line 1
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1212' at line 1
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=812' at line 1
+23:30:10 211002004  13 (Shift already closed)
+23:30:11 219001004  13 (Shift already closed)
+23:30:11 215002002  13 (Shift already closed)
+ERRORERRORERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1335' at line 1
+ERRORERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1299' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=336' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=551' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2075' at line 1
+ERROR23:30:11 209001004  13 (Shift already closed)
+23:30:11 211002001  13 (Shift already closed)
+23:30:11 219001001  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2496' at line 1
+23:30:11 209001003  13 (Shift already closed)
+23:30:11 72088003  13 (Shift already closed)
+23:30:11 72084003  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1490' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=784' at line 1
+23:30:11 213002002  13 (Shift already closed)
+ERRORERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=543' at line 1
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1442' at line 1
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1588' at line 1
+23:30:11 72084005  13 (Shift already closed)
+23:30:11 72084001  13 (Shift already closed)
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1691' at line 1
+23:30:11 72088004  13 (Shift already closed)
+23:30:11 72088008  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1227' at line 1
+23:30:11 72088006  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1412' at line 1
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1742' at line 1
+23:30:11 72023007  13 (Shift already closed)
+23:30:11 209001002  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2474' at line 1
+ERROR23:30:11 72023002  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=932' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=693' at line 1
+23:30:11 72023006  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=143' at line 1
+ERROR23:30:11 72120007  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1607' at line 1
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=228' at line 1
+23:30:11 213002003  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=2364' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=14' at line 1
+23:30:11 72023005  13 (Shift already closed)
+23:30:11 72120001  13 (Shift already closed)
+23:30:11 233001007  13 (Shift already closed)
+23:30:11 72120008  13 (Shift already closed)
+23:30:11 72120009  13 (Shift already closed)
+ERRORERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=708' at line 1
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1549' at line 1
+23:30:12 72023003  13 (Shift already closed)
+23:30:12 213001004  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1304' at line 1
+ERRORERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=1075' at line 1
+23:30:12 213001002  13 (Shift already closed)
+ 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=551' at line 1
+23:30:12 215002001  13 (Shift already closed)
+23:30:12 213001003  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=162' at line 1
+23:30:12 215002003  13 (Shift already closed)
+ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where so.id=181' at line 1
+23:30:13 222002001  13 (Shift already closed)
+23:30:35 1007003  10 (Pos is unreachable)
+23:30:35 1007004  10 (Pos is unreachable)
+23:30:35 1007005  10 (Pos is unreachable)
+23:30:35 72001029  10 (Pos is unreachable)
+23:30:35 72001031  10 (Pos is unreachable)
+23:30:35 72001033  10 (Pos is unreachable)
+23:30:36 72007002  10 (Pos is unreachable)
+23:30:36 72007003  10 (Pos is unreachable)
+23:30:36 72007004  10 (Pos is unreachable)
+23:30:36 72063001  10 (Pos is unreachable)
+23:30:36 72063002  10 (Pos is unreachable)
+23:30:37 72063005  10 (Pos is unreachable)
+23:30:37 72080007  10 (Pos is unreachable)
+23:30:38 207002001  10 (Pos is unreachable)
+23:30:38 207002002  10 (Pos is unreachable)
+23:30:38 207002003  10 (Pos is unreachable)
+23:30:38 207002004  10 (Pos is unreachable)
+23:30:39 222002002  10 (Pos is unreachable)
+23:30:39 222002003  10 (Pos is unreachable)
+23:30:39 222002004  10 (Pos is unreachable)

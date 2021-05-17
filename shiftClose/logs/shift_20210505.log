@@ -1,0 +1,144 @@
+23:30:17 222001004  Ping...
+23:30:17 1004009  Ping...
+23:30:17 72035004  Ping...
+23:30:17 72024003  Ping...
+23:30:17 1004009  Ping OK
+23:30:17 1004009  Checking DB
+23:30:17 222001004  Ping OK
+23:30:17 222001004  Checking DB
+23:30:17 72035004  Ping OK
+23:30:17 72035004  Checking DB
+23:30:17 72024003  Ping OK
+23:30:17 72024003  Checking DB
+23:30:17 72018001  Ping...
+23:30:17 1004009  DB OK
+23:30:17 1004009   ISMONEY: 0
+23:30:17 1004009  Checking for opened shift
+23:30:18 222001004  DB OK
+23:30:18 222001004   ISMONEY: 0
+23:30:18 222001004  Checking for opened shift
+23:30:18 72110005  Ping...
+23:30:18 72065008  Ping...
+23:30:18 72035004  DB OK
+23:30:18 72035004   ISMONEY: 0
+23:30:18 72035004  Checking for opened shift
+23:30:18 72024003  DB OK
+23:30:18 72024003   ISMONEY: 0
+23:30:18 72024003  Checking for opened shift
+23:30:18 72070001  Ping...
+23:30:18 1004009  Shift is open
+23:30:18 1004009  Checking for unclosed receipt
+23:30:18 72110005  Ping OK
+23:30:18 72110005  Checking DB
+23:30:18 72018001  Ping OK
+23:30:18 72018001  Checking DB
+23:30:18 72065008  Ping OK
+23:30:18 72035004  Shift is open
+23:30:18 222001004  Shift is open
+23:30:18 72065008  Checking DB
+23:30:18 72035004  Checking for unclosed receipt
+23:30:18 222001004  Checking for unclosed receipt
+23:30:18 72070001  Ping OK
+23:30:18 72070001  Checking DB
+23:30:18 72024003  Shift is open
+23:30:18 72024003  Checking for unclosed receipt
+23:30:18 1004009  All receipts are closed
+23:30:19 72110005  DB OK
+23:30:19 72110005   ISMONEY: 0
+23:30:19 72110005  Checking for opened shift
+23:30:19 1004009  Restarting UKM...
+23:30:19 72070001  DB OK
+23:30:19 72070001   ISMONEY: 0
+23:30:19 72070001  Checking for opened shift
+23:30:19 72035004  Receipt found
+23:30:19 222001004  All receipts are closed
+23:30:19 72065008  DB OK
+23:30:19 72065008   ISMONEY: 0
+23:30:19 72065008  Checking for opened shift
+ERROR 1048 (23000) at line 1: Column 'version' cannot be null
+23:30:19 72024003  All receipts are closed
+23:30:19 72035004  Restarting UKM...
+23:30:19 72018001  DB OK
+23:30:19 72018001   ISMONEY: 0
+23:30:19 72018001  Checking for opened shift
+23:30:19 222001004  Restarting UKM...
+23:30:19 72024003  Restarting UKM...
+23:30:20 72110005   13 (Shift already closed)
+23:30:20 72070001  Shift is open
+23:30:20 72070001  Checking for unclosed receipt
+23:30:20 72018001  Shift is open
+23:30:20 72018001  Checking for unclosed receipt
+23:30:20 72065008  Shift is open
+23:30:20 72065008  Checking for unclosed receipt
+23:30:21 72070001  All receipts are closed
+23:30:21 72070001  Restarting UKM...
+23:30:22 72065008  All receipts are closed
+23:30:22 72018001  All receipts are closed
+23:30:22 72065008  Restarting UKM...
+23:30:23 72018001  Restarting UKM...
+23:30:28 72035004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:29 1004009  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:31 72018001  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:32 72024003  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:35 72070001  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:35 72065008  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:36 222001004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:30:47 72007004  Ping...
+23:30:47 72063005  Ping...
+23:30:47 72069004  Ping...
+23:30:58 72035004  Checking for unclosed receipt
+23:30:59 72035004  Receipt found
+ERROR 1048 (23000) at line 1: Column 'version' cannot be null
+23:30:59 72035004  Restarting UKM...
+23:30:59 1004009  UKM started successfully
+23:31:03 72024003  UKM started successfully
+23:31:05 72018001  UKM started successfully
+23:31:06 72070001  UKM started successfully
+23:31:06 72065008  UKM started successfully
+23:31:06 222001004  UKM started successfully
+23:31:07 72035004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:31:09 1004009  Search for money in cashbox
+ERROR 1050 (42S01) at line 1: Table 'tals' already exists
+23:31:10 1004009  Cashbox is not empty. Total: 55556.0000
+23:31:13 72024003  Search for money in cashbox
+23:31:14 72024003  Cashbox is empty
+23:31:15 72018001  Search for money in cashbox
+23:31:16 72070001  Search for money in cashbox
+23:31:16 72065008  Search for money in cashbox
+23:31:16 222001004  Search for money in cashbox
+23:31:17 72070001  Cashbox is empty
+23:31:17 72007004   10 (Pos is unreachable)
+23:31:17 72063005   10 (Pos is unreachable)
+23:31:17 222001004  Cashbox is empty
+23:31:17 72069004   10 (Pos is unreachable)
+23:31:18 72065008  Cashbox is empty
+23:31:20 72018001  Cashbox is empty
+23:31:37 72035004  Checking for unclosed receipt
+23:31:38 72035004  Receipt found
+ERROR 1048 (23000) at line 1: Column 'version' cannot be null
+23:31:38 72035004  Restarting UKM...
+23:31:46 72035004  Sleep 30 seconds to make sure ukmclient has been restarted
+23:32:11 1004009   ISMONEY: 3
+23:32:11 1004009  Checking that shift was closed correctly
+23:32:11 1004009   18 (Failed to close shift)
+23:32:14 72024003   ISMONEY: 1
+23:32:14 72024003  Checking that shift was closed correctly
+23:32:15 72024003   18 (Failed to close shift)
+23:32:16 72035004   17 (POS has an open receipt)
+23:32:17 72070001   ISMONEY: 1
+23:32:17 72070001  Checking that shift was closed correctly
+23:32:17 222001004   ISMONEY: 1
+23:32:17 222001004  Checking that shift was closed correctly
+23:32:18 72065008   ISMONEY: 1
+23:32:18 72065008  Checking that shift was closed correctly
+23:32:18 72070001   18 (Failed to close shift)
+23:32:18 222001004  Shift number 346 was closed
+ERROR 1051 (42S02) at line 1: Unknown table 'tals'
+23:32:19 222001004   0 (successfull)
+23:32:19 72065008  Shift number 2340 was closed
+ERROR 1051 (42S02) at line 1: Unknown table 'tals'
+23:32:20 72065008   0 (successfull)
+23:32:21 72018001   ISMONEY: 1
+23:32:21 72018001  Checking that shift was closed correctly
+23:32:32 72018001   18 (Failed to close shift)
+23:32:32 Done
