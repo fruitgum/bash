@@ -39,7 +39,7 @@ $mail = 'sendemail -f IT@modis.ru -t '.$to.' -u  Незакрытые смены
 
 system($mail);
 $down = urlencode($down);
-$cmd = 'curl'.' -s '.' -X '.'POST https://api.telegram.org/bot1378410423:AAEj8uFXmFEc3_6nBIJLbZi5WixWwlcskrw/sendMessage -d chat_id=-1001275598711 -d parse_mode="html" -d text=';
+$cmd = 'curl'.' -s '.' -X '.'POST https://api.telegram.org/12345/sendMessage -d chat_id=-1 -d parse_mode="html" -d text=';
 system($cmd.$down);
 
 
