@@ -1,5 +1,5 @@
 <?php
-cstr = mysqli_connect('localhost', 'root', 'WKOs6obVo', 'cons');
+cstr = mysqli_connect();
 $query = "SELECT p.store_name, p.number, pc.ru_name, pc.id as code, date(s.date) as date 
 from shiftJournal s 
 JOIN posinfo p on s.cash_id = p.cash_id 
