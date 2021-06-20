@@ -34,6 +34,6 @@ for($e=0; $e<count($error); $e++){
 
 
 $down = urlencode($down);
-$cmd = 'curl'.' -s '.' -X '.'POST https://api.telegram.org/bot1378410423:AAEj8uFXmFEc3_6nBIJLbZi5WixWwlcskrw/sendMessage -d chat_id=237803149 -d parse_mode="html" -d text=';
+$cmd = 'curl'.' -s '.' -X '.'POST https://api.telegram.org/12345/sendMessage -d chat_id=0 -d parse_mode="html" -d text=';
 system($cmd.$down);
 ?>
