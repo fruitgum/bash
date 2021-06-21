@@ -1,8 +1,7 @@
 <?php
 ini_set('display_errors', '0');
+include('../phpver/lcstr.php');
 $interval = sprintf($argv[2]);
-#print_r($argv);
-$cstr = mysqli_connect('localhost', 'root', 'WKOs6obVo', 'cons');
 
 $lidq = mysqli_query($cstr, 'select max(id) as lid from launch_id');
 $lid = mysqli_fetch_assoc($lidq); // $lid['lid']
@@ -136,7 +135,7 @@ $msgm = str_replace(array('<i>', '</i>', '<b>', '</b>'), '', $down);
 $mail = 'sendemail -f sms@modis.ru -t '.$to.' -u RevenueMonitor -s rsmtp.modis.ru:25 -o message-charset=utf-8  -m "'.$msgm.'"';
 system($mail);
 $down = urlencode($down);
-$cmd = 'curl'.' -s '.' -X '.'POST https://api.telegram.org/bot1378410423:AAEj8uFXmFEc3_6nBIJLbZi5WixWwlcskrw/sendMessage -d chat_id=-1001275598711 -d parse_mode="html" -d text=';
+$cmd = 'curl'.' -s '.' -X '.'POST https://api.telegram.org/12345/sendMessage -d chat_id=-1 -d parse_mode="html" -d text=';
 system($cmd.$down);
 unset($down);
 mysqli_close($cstr);
