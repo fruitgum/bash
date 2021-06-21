@@ -1,6 +1,6 @@
 <?php
-require_once('../phpver/lcstr.php')
-require_once('../phpver/ocstr.php')
+require_once('../phpver/lcstr.php');
+require_once('../phpver/ocstr.php');
 
 if($conn){
   mysqli_query($conn2, "truncate table posinfo");
