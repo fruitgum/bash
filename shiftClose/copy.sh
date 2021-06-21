@@ -184,22 +184,6 @@ function cash(){
         echo $(date +%T)' '$CASHID  ' Cashbox is empty'
     elif { [[ $AMOUNTDECI -gt 0 ]] || [[ $AMOUNTINT -gt 0 ]]; }; then
         NMONEY='-'$MONEYCHECK
-        $TALSCHECK=$(echo $(mysql -uroot -pCtHDbCGK.C -Dukmclient -e'select * from tals' 2>&1) | cut -d ' ' -f1)
-        if [[ $TALSCHECK == 'ERROR' ]]; then
-            echo $(date +%T)' '$CASHID  ' Creating temporary table tals'
-            $POSAUTH' mysql'$POSDBAUTH' -e"CREATE TABLE tals AS SELECT * FROM trm_auth_local_storage"'
-            if [[ $t -eq 3 ]]; then
-                err 20
-            else
-                t=$(($t+1))
-                cash
-            fi
-        else
-            $POSAUTH' mysql'$POSDBAUTH' -e"truncate table tals; INSERT INTO tals select * trm_auth_local_storage"'
-        fi
-        # $POSAUTH' mysql'$POSDBAUTH' -e"CREATE TABLE tals AS SELECT * FROM trm_auth_local_storage"'
-        # $POSAUTH' mysql'$POSDBAUTH' -e"CREATE TABLE tals AS SELECT * FROM trm_auth_local_storage"'
-        $POSAUTH' mysql'$POSDBAUTH' -e"truncate table trm_auth_local_storage"'
         ISMONEY=2
         echo $(date +%T)' '$CASHID  ' Cashbox is not empty. Total: '$MONEYCHECK
     fi
@@ -211,7 +195,7 @@ if [[ $CHECKSCORE == 5 ]]; then
 fi
 
 if [[ $CHECKSCORE == 6 ]]; then
-    curl -d 'selection=["'"$CASHID"'"]&_'$(date +%s) http://dc-pos03/ukm/index.php?r=pos/closeShift -b PHPSESSID=1 > /dev/null 2>&1
+    curl -d 'selection=["'"$CASHID"'"]&_'$(date +%s) http://host/ukm/index.php?r=pos/closeShift -b PHPSESSID=1 > /dev/null 2>&1
     sleep 60
     if [[ $ISMONEY -eq 2 ]]; then
         $POSAUTH' mysql'$POSDBAUTH' -e"insert into trm_auth_local_storage select * from tals"'
