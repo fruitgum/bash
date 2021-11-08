@@ -7,7 +7,7 @@ Copy osc to /usr/local/bin
 `sudo cp osc  /usr/local/bin`
 
 Make it executeable
-`chmod +x /usr/local/bin/osc`
+`sudo chmod +x /usr/local/bin/osc`
 
 At first run osc creates an empty config.json, witch will be contain information about servers, and also defaults.json, witch will be contain default values, witch you may specify now or later
 
