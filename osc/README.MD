@@ -2,6 +2,10 @@
 It's may be useful when you need to be connect to а many remote servers by SSH, but u too lazy for editing ssh connection file :)
 This "app" keeps in itself parametrs of connection to a remote server, except password, e.g. ip, port (and username in future). It also have a default settings, e.g. username and SSH default port.
 
+## Requirements
+`jq`
+`Debian-based distro`
+
 ## Installation:
 Copy osc to /usr/local/bin
 `sudo cp osc  /usr/local/bin`
