@@ -2,6 +2,11 @@
 
 jq --version > /dev/null || jqinstall
 
+error(){
+	printf '\e[%sm' 31; echo $1
+	exit
+}
+
 jqinstall(){
 	printf '\e[%sm' 33; echo "For the application to work, you need to install the jq (JSON Parser for Linux)"
 	printf '\e[%sm' 33; echo -e "Do you want install jq now? [Y/n]: \c"
@@ -53,8 +58,9 @@ help(){
 }
 
 if [[ -z $1 ]]; then
-	printf '\e[%sm' 31; echo "You must specify a key"
-	#printf '\e[%sm' 34; help
+	printf '\e[%sm' 31; echo "You must specify a key."
+	printf '\e[%sm' 36; echo "Use osc -h for help"
+
 fi
 
 purge(){
@@ -158,12 +164,8 @@ fi
 if [[ ! -z $server ]]; then 
     check=$(jq -r '.[]| select(.name=='\"$server\"')|.name' $CONFIGFILE)
     if [[ -z $check ]]; then
-		printf '\e[%sm' 31; 
-		echo -e "server \c"; 
-		printf '\e[%sm' 33; 
-		echo -e "$server\c"; 
-		printf '\e[%sm' 31; 
-		echo " not found in config" && exit
+		server=$(printf '\e[%sm' 36;echo $server)
+		error "Undefiend server - $server"
     fi
     ip=$(jq -r '.[] | select(.name=='\"$server\"')|.ip' $CONFIGFILE)
     port=$(jq -r '.[] | select(.name=='\"$server\"')|.port' $CONFIGFILE)
@@ -171,6 +173,6 @@ if [[ ! -z $server ]]; then
 		port=$(jq -r '.[] | .defaults.port' $DEFAULTSFILE)
 	fi
     clear
-    printf '\e[%sm' 32;echo "Connecting to $server ($ip:$port)"
+    printf '\e[%sm' 32;echo "Connecting to $server ($ip:$port)";printf '\e[%sm' 
     ssh $username@$ip -p $port
 fi
