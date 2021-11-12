@@ -1,0 +1,99 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+	printf '\e[%sm' 31; echo "You must specify a key."
+	printf '\e[%sm' 36; echo "Use cryptocur -h for help"
+    exit
+fi
+
+help(){
+    echo "Crypto currency price parcer"
+    printf '\e[%sm' 33;  echo "Usage: cryptocur [-sch]"
+    echo "-s coin summ"
+    echo -e "-c coin id (e.g. btc, eth, toncoin) \c";printf '\e[%sm' 31; echo "(required)"
+    printf '\e[%sm' 33;echo "-h This help"
+    exit
+}
+
+main(){
+
+    TMPFILE="/tmp/$1"
+    echo "TMPFILE: "$TMPFILE
+    HISTORYFILE="/tmp/$1""_last"
+
+    coin=$(curl -s https://api.coingecko.com/api/v3/coins/list | jq -r '.[] | select(.symbol=='\"$1\"') | .id') # Getting coin id from coins list
+
+    if [[ -z $coin ]]; then
+        printf '\e[%sm' 31; echo "Coin not found" && exit
+    fi
+
+    curl -s https://api.coingecko.com/api/v3/coins/$coin > $TMPFILE # Getting all about choosen coin
+    change=$(jq -r '.market_data.price_change_percentage_24h' $TMPFILE) # Getting 24H price delta
+    last_change=$(jq -r '.market_data.price_change_percentage_24h' $HISTORYFILE) # Getting 24H price delta from prelast query
+    if [[ -z $last_change ]]; then
+        diff_change=$change
+    else
+        diff_change=$(echo $(bc -l <<< "$change-($last_change)") |  sed -e 's/^-\./-0./' -e 's/^\./0./') #Make delta between 24H deltas. sed needs, because bc remove integer 0 from decimal (0.1 > .1; -0.1 > -.1)
+    fi
+    price=$(jq -r '.market_data.current_price.usd' $TMPFILE)
+    if [[ ! -z $2 ]]; then
+        summ=$(bc -l <<< "$price*$2")
+        if ! [[ $summ =~ $re ]]; then 
+            echo $(
+            printf '\e[%sm' 31
+            echo "Incorrect summ"
+            printf '\e[%sm' 39
+            )
+            summ=$(echo -e $(printf '\e[%sm' 30; echo "null "; printf '\e[%sm' 39))
+        fi
+    else
+        summ=$(echo -e $(printf '\e[%sm' 30; echo "null "; printf '\e[%sm' 39))
+    fi
+
+    re='^[0-9][.0-9]+$';
+
+    #===================================================#
+    # dpm, dch - diff between last and pre-last queries #
+    # cmp, dc - 24h diff                                #
+    #===================================================#
+
+    dpm=$(echo "$diff_change" | cut -d '-' -f1)
+    cpm=$(echo "$change" | cut -d '-' -f1)
+    echo -e "coin id:*\t $coin" | column -s "*" -t
+
+    if [[ -z $dpm ]]; then 
+        dch=$(printf '\e[%sm' 31; echo "$diff_change"; printf '\e[%sm' 39)
+    else
+        dch=$(printf '\e[%sm' 32; echo "$diff_change"; printf '\e[%sm' 39) 
+    fi
+    
+    if [[ -z $cpm ]]; then
+        dc=$(printf '\e[%sm' 31; echo "$change"; printf '\e[%sm' 39) 
+    else
+        dc=$(printf '\e[%sm' 32; echo "$change"; printf '\e[%sm' 39) 
+    fi
+
+    echo -e "price, \$:*\t $price" | column -s "*" -t
+    echo -e "total, \$:*\t $summ" | column -s "*" -t
+    echo -e "change, %:*\t $dch \c"  | column -s "*" -t 2>/dev/null
+    printf '\e[%sm' 39
+    echo -e "24h change, %:* $dc \c"  | column -s "*" -t 2>/dev/null
+    cat $TMPFILE>$HISTORYFILE
+    rm -f $TMPFILE
+}
+
+while [ -n "$1" ]; do
+	case "$1" in
+		-c|--coin) c=$2
+        shift ;;
+		-s|--summ) s=$2
+        shift ;;
+        --) shift 
+        break ;;
+	 	*) help 
+		break ;;
+	esac
+	shift
+done
+
+main $c $s
