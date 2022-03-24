@@ -1,0 +1,60 @@
+#!/bin/bash
+if [[ -z $1 ]]; then
+    echo "Define namespace" && exit 1
+fi
+
+db_connect(){
+    NS=$2
+    kubectl -n $NS exec -it db-postgresql-0 -- sh -c "PGPASSWORD=$1 psql -U postgres"
+}
+
+db_dump(){
+    if [[ -z $3 ]]; then
+        echo "Specify output directory" && exit 1
+    fi
+    NS=$2
+    dir=$3
+    if [[ ! -z $4 ]]; then
+	compress="-Z 9"
+	fileExt="sql.gz"
+    else
+	echo "Plain"
+	fileExt="sql"
+    fi
+    echo "Creating DB dump $NS.$(date +%d"."%m"."%Y).sql.gz into $dir"
+    kubectl -n $NS exec -i db-postgresql-0 -- sh -c "PGPASSWORD=$1 pg_dump -U postgres $compress $NS"  > $dir$NS.$(date +%d"."%m"."%Y).$fileExt
+}
+
+dbpass(){
+    NS=$1
+    pass=$(kubectl -n $NS get secrets db-postgresql -o=jsonpath='{.data.postgresql-password}' | base64 -d)
+    if [[ $2 == "connect" ]]; then
+        db_connect $pass $NS
+    elif [[ $2 == "dump" ]]; then
+        db_dump $pass $NS $3
+    else
+        echo -e "$NS db pass: \c"
+        echo $pass
+    fi
+}
+
+thishelp(){
+    echo "Usage: ./kpass.sh [options] namespace directory(for -d)"
+    echo "Options:"
+    echo "-p - Get DB pass"
+    echo "-c - Conndect to DB"
+    echo "-d - make a DB dump"
+}
+
+while [ -n "$1" ]; do
+	case "$1" in
+        -p) dbpass $2
+        break ;;
+        -c) dbpass $2 connect
+        break ;;
+        -d) dbpass $2 dump $3 $4
+        break;;
+        *) thishelp
+        break ;;
+	esac
+done
