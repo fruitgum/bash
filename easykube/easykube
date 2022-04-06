@@ -355,8 +355,8 @@ while [ -n "$1" ]; do
         break ;;
         logs) podLogs $2
         break ;;
-        expose) exposePort $2 $3 $4 #ns kind name
-        break ;;
+        # expose) exposePort $2 $3 $4 #ns kind name
+        # break ;;
         *) thisHelp
         break ;;
     esac
