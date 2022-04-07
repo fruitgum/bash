@@ -138,9 +138,9 @@ dbDump(){
     fi
 
     FILE=$dumpdir"/"$NS.$(date +%d"."%m"."%Y).sql.gz
-
+    container=$(kubectl -n $NS get pod $podDb -o=jsonpath={'.spec.containers[0].name'})
     echo -e "${BLUE}Dumping DB $NS into $FILE ${NC}"
-    kubectl -n $NS exec $podDb -- sh -c "PGPASSWORD=$DBPASS pg_dump -U postgres -Z 9 $NS" > $FILE
+    kubectl -n $NS exec $podDb -c $container -- sh -c "PGPASSWORD=$DBPASS pg_dump -U postgres -Z 9 $NS" > $FILE
     echo "Done"
 
 }
