@@ -32,9 +32,9 @@ dbPass(){
         echo "Usage:
     easykube db [namespace] [action]
 Actions:
-    pass
-    connect
-    dump"
+    pass - show db password
+    connect - connect to db
+    dump - make db dump"
         exit 1
     }
 
@@ -44,7 +44,7 @@ Actions:
         exit 0
     }
 
-    if { [[ $1 == "help" ]] || [[ -z $1 || -z $2 ]];  }; then
+    if { [[ $1 =~ "help" ]] || [[ -z $1 || -z $2 ]];  }; then
         dbHelp
     fi
     NS=$1
@@ -140,7 +140,7 @@ dbDump(){
     FILE=$dumpdir"/"$NS.$(date +%d"."%m"."%Y).sql.gz
 
     echo -e "${BLUE}Dumping DB $NS into $FILE ${NC}"
-    kubectl -n $NS exec -it $podDb -- sh -c "PGPASSWORD=$DBPASS pg_dump -U postgres -Z 9 $NS" > $FILE
+    kubectl -n $NS exec $podDb -- sh -c "PGPASSWORD=$DBPASS pg_dump -U postgres -Z 9 $NS" > $FILE
     echo "Done"
 
 }
@@ -155,7 +155,7 @@ exe(){
         exit 1
     }
 
-    if { [[ -z $1 || -z $2 ]]; }; then
+    if { [[ $1 =~ "help" ]] || [[ -z $1 || -z $2 ]]; }; then
         exeHelp
         exit 1
     fi
@@ -206,6 +206,11 @@ podLogs(){
         exit 1
     fi
 
+    if { [[ $1 =~ "help"  || -z $1 ]]; }; then
+        echo "Usage: easykube logs [namespase]"
+        exit 1
+    fi
+
     if [[ -z $2 ]]; then
 
         IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods | grep -v "NAME" | awk '{print $1"@"$3}'))
@@ -250,6 +255,15 @@ podLogs(){
 }
 
 checkPods(){
+
+    if { [[ $1 =~ "help" ]] || [[ -z $2 || -z $1 ]]; }; then
+        echo "Usage: easykube check [namespase] [option]"
+        echo "Actions:"
+        echo "  all - show all state pods"
+        echo "  warn - show pods with restarts"
+        echo "  err - show pods with errors"
+        exit 1
+    fi
 
     afterRun(){
         exepods=$@
@@ -335,8 +349,54 @@ checkPods(){
              ;;
         esac
     done
+}
+
+expose(){
+    NS=$1
+    kind=$2
+
+    exposeHelp(){
+        echo "Usage: easykube expose [namespace] [kind]"
+        echo "Kinds:"
+        echo "  service, svc, s"
+        echo "  deployment, d"
+        echo "  pod"
+        exit 1
+    }
 
 
+
+    if { [[ $1 =~ "help" ]] || [[ -z $1 || -z $2 ]]; }; then
+        exposeHelp
+    fi
+
+    case $2 in
+        service|svc|c) exposeSvc
+        break ;;
+        deployment|d) exposeDeployment
+        break ;;
+        pod) exposePod
+        break ;;
+        *) exposeHelp
+        break ;;
+    esac
+}
+
+thisHelp(){
+    echo "Easykube."
+    echo "Usage: easykube [option] [arguments]"
+    echo "List of options:"
+    echo "  db"
+    echo "  exe"
+    echo "  check, c"
+    echo "  logs, l"
+    # echo "  expose, e"
+    echo "  help, h"
+    echo "  version, v"
+}
+
+version(){
+    echo "easykube 1.0b"
 }
 
 if [[ $(kubectl config current-context) =~ "prod" ]]; then
@@ -351,12 +411,14 @@ while [ -n "$1" ]; do
         break ;;
         exe) exe $2 $3 #ns command
         break ;;
-        check) checkPods $2 $3 #ns
+        check | c) checkPods $2 $3 #ns
         break ;;
-        logs) podLogs $2
+        logs | l) podLogs $2
         break ;;
-        # expose) exposePort $2 $3 $4 #ns kind name
+        # expose | e) exposePort $2 $3 #ns kind
         # break ;;
+        version | v) version
+        break ;;
         *) thisHelp
         break ;;
     esac
