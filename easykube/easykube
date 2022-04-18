@@ -5,6 +5,10 @@
 #       pod
 #       svc
 #       deployment
+#   check:
+#       make a flow
+#   db:
+#       restore from dump
 
 ###COLORLS###
 #LIGHT COLORS#
@@ -24,8 +28,32 @@ PODOK=("Running")
 PODERR=("CrashLoopBackOff" "Error" "Failed" "ImagePullBackOff" "ErrImagePull" "Unknow")
 PODNONE=("Completed" "Terminating" "Init" "Waiting" "Pending" "ContainerCreating")
 
-trap 'tput cnorm; echo' EXIT
 
+if [[ $USER != 'root' ]]; then
+    if [[ ! -d "/home/$USER/.easykube/" ]]; then
+        mkdir /home/$USER/.easykube/
+    fi
+    CONFIGFILE="/home/$USER/.easykube/config.json"
+    CONNFILE="/home/$USER/.easykube/connections.json"
+else
+    if [[ ! -d " /root/.easykube/" ]]; then
+        mkdir /root/.easykube/
+    fi
+    CONFIGFILE="/root/.easykube/config.json"
+    CONNFILE="/root/.easykube/connections.json"
+fi
+
+if [[ ! -e $CONFIGFILE ]]; then
+    touch $CONFIGFILE
+    chmod 775 $CONFIGFILE
+    echo '{"kubeconfig":"'$(kubectl config current-context)'"}' | jq > $CONFIGFILE
+fi
+
+if [[ ! -e $CONNFILE ]]; then
+    touch $CONNFILE
+    chmod 775 $CONNFILE
+    echo '[]' | jq > $CONNFILE
+fi
 #TABLEVIEW=$(awk '{printf "%-0s %-5s %-50s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}') #why the fuck it isn't works?..
 table6(){
     awk '{printf "%-0s %-5s %-60s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}'
@@ -53,7 +81,6 @@ dbPass(){
         exit 0
     }
 
-    
     if { [[ $2 =~ "help" ]] || [[ -z $3 || -z $2 ]]; }; then
         if [[ -z $2 ]]; then
             echo -e "${RED}Namespace is not defined${NC}"
@@ -159,9 +186,15 @@ dbDump(){
 
 }
 
+dbRestore(){
+    #kubectl -n $NS sca
+    #kubectl -n $NS get pod db-postgresql-0 -o json | jq ".spec.volumes [0].persistentVolumeClaim.claimName " -r
+    exit 0
+}
+
 exe(){
     NS=$2
-    cmd=$3
+    #cmd=$3
 
     exeHelp(){
         echo "kubectl exec"
@@ -175,6 +208,11 @@ exe(){
         fi
         $1Help
     fi
+
+    while [ -n "$3" ]; do
+        cmd+=$3" "
+        shift
+    done
 
     IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods | grep -v "NAME" |  awk '{print $1"@"$3}'))
 
@@ -265,10 +303,7 @@ podLogs(){
 
 }
 
-
 checkPods(){
-
-    tput sc
 
     checkHelp(){
         echo "Usage: easykube check [namespase] [option] watch(optional)"
@@ -285,12 +320,15 @@ checkPods(){
         echo -e "\nChoose pod to view its log or press ^C: \c"
         read -r b
 
+        if [[ -z $exepods ]]; then
+            echo -e "\nNo pods available" && exit 1
+        fi
+
         podLogs "logs" $NS ${exepods[b]}
     }
 
     all(){
         show(){
-            tput rc
             a=0
             for (( i=0; i<${#pods[@]}; i++ )); do
                 pod=$(echo ${pods[i]} | cut -d"@" -f1)
@@ -313,18 +351,19 @@ checkPods(){
                     exepods+=($pod)
                 fi
             done
-            if [[ -z $exepods ]]; then
-                echo -e "\nNo pods available" && exit 1
-            fi
         }
 
         if [[ -z $1 ]]; then
             show
+            exit 0
             afterRun ${exepods[@]}
         else
-            tput civis
-            while [ true ]; do
+            while true ; do
+                tput el
                 show
+                if [[ -z $exepods ]]; then
+                    echo -e "\nNo pods available" && exit 1
+                fi
                 sleep 5
             done
         fi
@@ -371,178 +410,103 @@ checkPods(){
 
     IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods | grep -v "NAME" | awk '{print $1"@"$3"@"$4}'))
 
-
-            tput sc
-    #
-        while [ -n $3 ]; do
-            case $3 in
-                err) err $4
-                ;;
-                warn) warn $4
-                ;;
-                all) all $4
-                ;;
-                *) checkHelp
-                ;;
-            esac
-        done
+    while [ -n $3 ]; do
+        case $3 in
+            err) err $4
+            ;;
+            warn) warn $4
+            ;;
+            all) all $4
+            ;;
+            *) checkHelp
+            ;;
+        esac
+    done
 }
 
-expose(){
-    NS=$2
-    kind=$3
-    exposeHelp(){
-        echo "Usage: easykube expose [namespace] [kind] port(optional)"
-        echo "Example: easykube expose demo svc 8080"
-        echo "Kinds:"
-        echo "  service, svc, s"
-        echo "  deployment, d"
-        echo "  pod"
-        exit 1
-    }
+# expose(){
+#     NS=$2
+#     kind=$3
+#     sport=$4
 
-    handleConnection(){
-        NS=$1
-        name=$2
-        sport=$3
-        port=$4
-        file="hc-$(uuidgen)"
+#     exposeHelp(){
+#         echo "Usage: easykube expose [namespace] [kind] port(optional)"
+#         echo "Example: easykube expose demo svc 8080"
+#         echo "Kinds:"
+#         echo "  service, svc, s"
+#         echo "  deployment, d"
+#         echo "  pod"
+#         exit 1
+#     }
 
-        echo "kubectl -n $NS port-forward svc/$name $sport/$port & 2>&1 /dev/null" > "/tmp/$file"
-        chmod +x "/tmp/$file"
-        ./tmp/$file > /dev/null 2>&1 && hcpid=$?
-        echo [] | jq '. + [{"defaults":{"name":'\"$name\"', "port":'\"$port\"', "pid":'\"$hcpid\"'}}]' > $DEFAULTSFILE
+#     case $kind in
+#         service|svc|c) resource="service"
+#         ;;
+#         deployment|d) resource="deployment"
+#         ;;
+#         pod) resource="pod"
+#         ;;
+#         *) exposeHelp
+#         ;;
+#     esac
 
+#     IFS=" " read -a items <<< $(echo $(kubectl -n $NS get $resource"s" | grep -v "NAME" | awk '{print $1"@"$5}'))
 
-    }
+#     if [[ -z $items ]]; then
+#         echo -e "\nNo $resource"s" available" && exit 1
+#     fi
 
-    exposeSvc(){
-        IFS=" " read -a svcs <<< $(echo $(kubectl -n $NS get services | grep -v "NAME" | awk '{print $1"@"$5}'))
+#     for (( i=0; i<${#items[@]}; i++ )); do
+#         item=$(echo ${items[i]} | cut -d"@" -f1)
+#         port=$(echo ${items[i]} | cut -d"@" -f2 | cut -d"/" -f1)
+#         echo -e "   ${GREEN} [$i]: $item${NC}" | table3
+#         array+=($item)
+#     done
 
-        if [[ -z $svcs ]]; then
-            echo -e "\nNo pods available" && exit 1
-        fi
+#     echo -e "\nSelect number: \c"
+#     read -r c
+#     item=${array[c]}
+#     echo ""
 
-        for (( i=0; i<${#svcs[@]}; i++ )); do
-            svc=$(echo ${svcs[i]} | cut -d"@" -f1)
-            port=$(echo ${svcs[i]} | cut -d"@" -f2 | cut -d"/" -f1)
-            echo -e "   ${GREEN} [$i]: $pod${NC}" | table3
-        done
+#     if [[ -z $sport ]]; then
+#         sport=$port
+#     fi
 
-        echo -e "\nSelect number: \c"
-        read -r c
-        svc=${svcs[c]}
-        echo ""
+#     handleConnection(){
+#         dir="/tmp/"
+#         file="hc-$(uuidgen).sh"
+#         echo "
+#         CONNFILE=$(echo $CONNFILE)
+#         kubectl -n $NS port-forward svc/$svc $sport/$port
+#         sleep 3600
+#         cat $CONNFILE | jq 'del(.connections | .[] | select(.name=='\"test1\"'))' > /tmp/easykube && cat /tmp/easykube > $CONNFILE
+#         exit 0" > $dir$file
+#         chmod +x $dir$file
+#         # cd $dir && ./$file > /dev/null 2>&1
+#         # pid=$!
+#         # if [[ $? -ne 0 ]]; then
+#         #     echo "Can't establish connection" && exit 1
+#         # fi
 
-        case $4 in
-            port) sport=$5
-            ;;
-        esac
-        if [[ -z $sport ]]; then
-            echo -e "Local port (or leave empty): \c"
-            read -r sport
-            if [[ -z $sport ]]; then
-                sport=$port
-            fi
-        fi
-        echo ""
-        echo -e "${YELLOW}$pod selected${NC}"
-        echo ""
-        #kubectl -n $NS port-forward svc/$svc $sport/$port & 2>&1 /dev/null
-        handleConnection $NS $svc $sport $port
-        exit 0
-    }
+#         check=cat $CONNFILE | jq '.connections | .[] | select(.name=='\"$NS\"')'
+#         if [[ ! -z $check ]]; then
+#             port=cat $CONNFILE | jq '.connections | .[] | select(.name=='\"$NS\"') | .port'
+#             pid=cat $CONNFILE | jq '.connections | .[] | select(.name=='\"$NS\"') | .pid'
+#             echo "$NS already exposed with port $port ($pid)" && exit 1
+#         fi
+#         echo "jq"
+#         cat $CONNFILE | jq '.[] + [{"name":'\"$NS\"', "port":'\"$sport\"', "pid":'\"$pid\"'}]' #> /tmp/easykube.conf && cat /tmp/easykube.conf > $CONFIGFILE
+#         echo "$resource $item available at http://127.0.0.1:$sport for a 1 hour"
 
-    exposeDeployment(){
-        IFS=" " read -a deployments <<< $(echo $(kubectl -n $NS get deployments | grep -v "NAME" | awk '{print $1"@"$5}'))
+#     }
 
-        if [[ -z $deployments ]]; then
-            echo -e "\nNo deployments available" && exit 1
-        fi
-
-        for (( i=0; i<${#deployments[@]}; i++ )); do
-            dp=$(echo ${deployments[i]} | cut -d"@" -f1)
-            port=$(echo ${deployments[i]} | cut -d"@" -f2 | cut -d"/" -f1)
-            echo -e "   ${GREEN} [$i]: $dp${NC}" | table3
-        done
-
-        echo -e "\nSelect number: \c"
-        read -r c
-        deployment=${deployments[c]}
-        echo ""
-
-        case $4 in
-            port) sport=$5
-            ;;
-        esac
-        if [[ -z $sport ]]; then
-            echo -e "Local port (or leave empty): \c"
-            read -r sport
-            if [[ -z $sport ]]; then
-                sport=$port
-            fi
-        fi
-        echo ""
-        echo -e "${YELLOW}$pod selected${NC}"
-        echo ""
-        kubectl -n $NS port-forward deployment/$deployment $sport/$port & 2>&1 /dev/null
-        exit 0
-    }
-
-    exposePod(){
-        IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods | grep -v "NAME" | awk '{print $1"@"$5}'))
-
-        if [[ -z $pods ]]; then
-            echo -e "\nNo pods available" && exit 1
-        fi
-
-        for (( i=0; i<${#pods[@]}; i++ )); do
-            dp=$(echo ${pods[i]} | cut -d"@" -f1)
-            port=$(echo ${pods[i]} | cut -d"@" -f2 | cut -d"/" -f1)
-            echo -e "   ${GREEN} [$i]: $dp${NC}" | table3
-        done
-
-        echo -e "\nSelect number: \c"
-        read -r c
-        pod=${pods[c]}
-        echo ""
-
-        case $4 in
-            port) sport=$5
-            ;;
-        esac
-        if [[ -z $sport ]]; then
-            echo -e "Local port (or leave empty): \c"
-            read -r sport
-            if [[ -z $sport ]]; then
-                sport=$port
-            fi
-        fi
-        echo ""
-        echo -e "${YELLOW}$pod selected${NC}"
-        echo ""
-        kubectl -n $NS port-forward pods/$pod $sport/$port & 2>&1 /dev/null
-        exit 0
-    }
-
-    if { [[ $2 =~ "help" ]] || [[ -z $3 || -z $2 ]]; }; then
-        if [[ -z $2 ]]; then
-            echo -e "${RED}Namespace is not defined${NC}"
-        fi
-        $1Help
-    fi
-
-    case $2 in
-        service|svc|c) exposeSvc
-        break ;;
-        deployment|d) exposeDeployment
-        break ;;
-        pod) exposePod
-        break ;;
-        *) exposeHelp
-        break ;;
-    esac
-}
+#     echo ""
+#     echo -e "${YELLOW}$item selected${NC}"
+#     echo ""
+#     #kubectl -n $NS port-forward svc/$svc $sport/$port & 2>&1 /dev/null
+#     handleConnection $item $sport $port
+#     exit 0
+# }
 
 thisHelp(){
     echo "Easykube."
@@ -571,13 +535,13 @@ while [ -n "$1" ]; do
     case $1 in
         db) dbPass $1 $2 $3 #option, ns, next call
         break ;;
-        exe) exe $1 $2 $3 #option, ns command
+        exe|exec) exe $1 $2 $3 #option, ns command
         break ;;
-        check | c) checkPods $1 $2 $3 $4
+        check | c) checkPods "check" $2 $3 $4
         break ;;
-        logs | l) podLogs $1 $2 #option, ns
+        logs | l) podLogs "logs" $2 #option, ns
         break ;;
-        # expose | e) exposePort $1 $2 $3 $4 $5 #option, ns, kind,
+        # expose | e) expose "expose" $2 $3 $4 $5 #option, ns, kind,
         # break ;;
         version | v) version
         break ;;
