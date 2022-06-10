@@ -21,7 +21,7 @@ NC='\033[0m' #No color
 
 ###POD STATES###
 PODOK=("Running")
-PODERR=("CrashLoopBackOff" "Error" "Failed" "ImagePullBackOff" "ErrImagePull" "Unknow")
+PODERR=("CrashLoopBackOff" "Error" "Failed" "ImagePullBackOff" "ErrImagePull" "Unknow" "CreateContainerConfigError")
 PODNONE=("Completed" "Terminating" "Init" "Waiting" "Pending")
 
 #TABLEVIEW=$(awk '{printf "%-0s %-5s %-50s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}') #why the fuck it isn't works?..
