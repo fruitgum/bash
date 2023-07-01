@@ -1,0 +1,244 @@
+#!/bin/bash
+
+jq --version > /dev/null || jqinstall
+
+error(){
+	printf '\e[%sm' 31; echo $1
+	exit
+}
+
+jqinstall(){
+	printf '\e[%sm' 33; echo "For the application to work, you need to install the jq (JSON Parser for Linux)"
+	printf '\e[%sm' 33; echo -e "Do you want install jq now? [Y/n]: \c"
+	read -r yesno
+	if [[ $yesno='Y' ]]; then
+		sudo apt install jq
+	else
+		printf '\e[%sm' 31; echo "Exiting" && exit
+	fi
+}
+
+CONFIGDIR="/home/$USER/.config/osc"
+CONFIGFILE=$CONFIGDIR"/config.json"
+DEFAULTSFILE=$CONFIGDIR"/defaults.json"
+if [[ ! -d $CONFIGDIR ]]; then #First configuration
+	printf '\e[%sm' 33; echo "Hello! Thanks for usage my script! I hope it will be usefull!"
+	printf '\e[%sm' 33; echo "Creating configuration file..."
+	printf '\e[%sm' 33; echo "You may specify default username and ssh port."	
+	printf '\e[%sm' 33; echo -e "Username: \c"; printf '\e[%sm' 39;
+	read -r username
+	printf '\e[%sm' 33; echo -e "SSH Port [22]: \c"; printf '\e[%sm' 39;
+	read -r port
+	if [[ -z $port ]]; then
+		port="22"
+	fi
+	mkdir $CONFIGDIR 
+	touch $CONFIGFILE
+	echo [] | jq '. + [{"defaults":{"username":'\"$username\"', "port":'\"$port\"'}}]' > $DEFAULTSFILE
+	echo [] > $CONFIGFILE
+	printf '\e[%sm' 32; echo "Done! Happy usage!"
+	echo ""
+	exit
+fi
+
+help(){
+	echo "SSH connections organaizer"
+	echo ""
+	printf '\e[%sm' 33; echo "Usage: osc [-adush][--purge][--defaults]"
+	echo ""
+	printf '\e[%sm' 34; echo "Add a server:		osc -a Name IP Port(non-require)"
+	echo "Delete a server:	osc -d Name. For cleanup a configfile type 'all' instread of 'Name'"
+	echo "Connect to server:	osc -u username -s Name"
+	echo "List servers:		osc -l"
+	echo "List default values:	osc --defaults"
+	echo "Update server data:	osc --update"
+	echo -e "Remove all data:	osc --purge. \c"; printf '\e[%sm' 31; echo "Warning! This action cannot be undone"
+	printf '\e[%sm' 34;
+	echo "This help:		osc -h"
+	exit
+}
+
+if [[ -z $1 ]]; then
+	printf '\e[%sm' 31; echo "You must specify a key."
+	printf '\e[%sm' 36; echo "Use osc -h for help"
+
+fi
+
+purge(){
+	echo "Warning! This action cannot be undone"
+	echo ""
+	printf '\e[%sm' 33; echo -e "Are you sure? [Y/n]: \c"
+	read -r yesno
+	if [[ $yesno == 'Y' ]]; then
+		rm -rf $CONFIGDIR
+		printf '\e[%sm' 32; echo "All data removed"
+		exit
+	else
+		printf '\e[%sm' 37; echo "Canceled"
+		exit
+	fi
+}
+
+listserver(){
+	echo ""
+	printf '\e[%sm' 37; jq -r '(["Name","Address", "Login"]), ["==============","====================","=============="], (.[] | [.name, .ip+":"+.port, .username]), [" "] | @tsv' $CONFIGFILE | column -t
+}
+
+addserver(){
+    if { [[ $1 == '-h' ]] || [[ -z $1 || -z $2 ]]; }; then
+		printf '\e[%sm' 36; echo "Add a server: osc -a Name IP Port"
+		printf '\e[%sm' 33; echo "Name: name of record in config file"
+		echo "IP: address of server"
+		echo "Port: ssh port, default is 22"
+		exit
+    fi
+	cat $CONFIGFILE | jq '. + [{"name":'\"$1\"', "ip":'\"$2\"', "port":'\"$3\"', "username":'\"$4\"'}]' > jsontmp && cat jsontmp > $CONFIGFILE
+	rm -f jsontmp
+	echo "$1 with ip $2 added to config"
+	exit
+}
+
+delserver(){
+	if [[ $1 == 'all' ]]; then
+		echo "[]" > $CONFIGFILE
+		echo "All servers deleted"
+		exit
+	elif [[ -z $1 ]]; then
+		printf '\e[%sm' 31; echo "Specify a server name" && exit
+	else
+		cat $CONFIGFILE | jq 'del(.[] | select(.name=='\"$1\"'))' > jsontmp && cat jsontmp > $CONFIGFILE
+		echo "server $1 deleted"
+		exit
+	fi
+}
+
+update(){
+	if [[ -z $1 ]]; then
+		printf '\e[%sm' 31; echo "Specify a server name" && exit
+	fi
+    echo "Updating server info"
+    echo "Type 'empty' if you want clear a row"
+    echo "Leave row empty, if you don\'t want change info"
+    i=$(jq -r '.[0] | length' $CONFIGFILE)
+    i=$((--i))
+    e=0
+    read -a values <<< $(echo $(jq -r '.[] | select(.name=='\"$1\"') | values[]' $CONFIGFILE))
+    while [ $e -le $i ]; do
+        name=${values[$e]}
+        ((++e))
+        ip=${values[$e]}
+        ((++e))
+        port=${values[$e]}
+        ((++e))
+        login=${values[$e]}
+    done
+    read -a keys <<< $(echo $(jq -r '.[0] | keys[]' $CONFIGFILE))
+
+    printf '\e[%sm' 33; echo -e "Name[$name]: \c"; printf '\e[%sm' 39;
+	read -r newname
+    if [[ -z $newname ]]; then
+        newname=$name
+    elif [[ $newname=='empty' ]]; then
+		newname=''
+	fi
+
+    printf '\e[%sm' 33; echo -e "IP[$ip]: \c"; printf '\e[%sm' 39;
+	read -r newip
+    if [[ -z $newip ]]; then
+        newip=$ip
+	elif [[ $newip=='empty' ]]; then
+		newip=''
+    fi
+
+    printf '\e[%sm' 33; echo -e "Port[$port]: \c"; printf '\e[%sm' 39;
+	read -r newport
+    if [[ -z $newport ]]; then
+        newport=$port
+	elif [[ $newport=='empty' ]]; then
+		newport=''
+    fi
+
+    printf '\e[%sm' 33; echo -e "Login[$login]: \c"; printf '\e[%sm' 39;
+	read -r newlogin
+    if [[ -z $newlogin ]]; then
+        newlogin=$login
+	elif [[ $newlogin=='empty' ]]; then
+		newlogin=''
+    fi
+
+    cat $CONFIGFILE | jq 'del(.[] | select(.name=='\"$1\"'))' > jsontmp && cat jsontmp > $CONFIGFILE
+    cat $CONFIGFILE | jq '. + [{"name":'\"$newname\"', "ip":'\"$newip\"', "port":'\"$newport\"', "username":'\"$newlogin\"'}]' > jsontmp && cat jsontmp > $CONFIGFILE
+    rm -f jsontmp
+}
+
+defaults(){
+username=$(jq -r '.[] | .defaults.username' $DEFAULTSFILE)
+port=$(jq -r '.[] | .defaults.port' $DEFAULTSFILE)
+    if [[ $1 == 'edit' ]]; then
+		echo -e "Username [$username]: \c"
+		read -r newusername
+		cat $DEFAULTSFILE | jq '.[] | .defaults.username='\"$newusername\"'' > jsontmp && cat jsontmp > $DEFAULTSFILE
+		echo -e "SSH Port[$port]: \c"
+		read -r newport
+		cat $DEFAULTSFILE | jq '.[] | .defaults.port='\"$newport\"'' > jsontmp && cat jsontmp > $DEFAULTSFILE
+    else
+	printf '\e[%sm' 34; echo "For edit values use '--defaults edit'"
+	echo ""
+    fi
+printf '\e[%sm' 37;  echo "Default values"
+echo "----------------------------------"
+echo "Username:	"$username
+echo "Port:		"$port
+echo ""
+exit
+}
+
+while [ -n "$1" ]; do
+	case "$1" in
+		--defaults) defaults $2
+			break ;;
+		--purge) purge
+			break ;;
+		--update) update $2
+			break ;;
+		-l) listserver
+			break ;;
+		-a) addserver $2 $3 $4 $5
+			break ;;
+		-d) delserver $2
+			break ;;
+		-u) username=$2 && shift;;
+		-s) server=$2 && shift;;
+		--) shift
+			break ;;
+	 	*) help 
+			break ;;
+	esac
+	shift
+done
+
+if [[ -z $username ]]; then
+	username=$(jq -r '.[] | select(.name=="balancer") | .username' $CONFIGFILE)
+	if [[ -z $username ]]; then
+		username=$(jq -r '.[]| .defaults.username' $DEFAULTSFILE)
+		if [[ -z $username ]]; then
+			echo "Username not specified" && exit
+		fi
+	fi
+fi
+
+if [[ ! -z $server ]]; then 
+    check=$(jq -r '.[]| select(.name=='\"$server\"')|.name' $CONFIGFILE)
+    if [[ -z $check ]]; then
+		server=$(printf '\e[%sm' 36;echo $server)
+		error "Undefiend server - $server"
+    fi
+    ip=$(jq -r '.[] | select(.name=='\"$server\"')|.ip' $CONFIGFILE)
+    port=$(jq -r '.[] | select(.name=='\"$server\"')|.port' $CONFIGFILE)
+	if [[  -z $port ]]; then
+		port=$(jq -r '.[] | .defaults.port' $DEFAULTSFILE)
+	fi
+    clear
+    printf '\e[%sm' 32;echo "Connecting to $server ($ip:$port)";printf '\e[%sm' 
+    ssh $username@$ip -p $port
+fi

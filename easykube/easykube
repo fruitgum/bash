@@ -1,0 +1,425 @@
+#!/bin/bash
+
+#TODO:
+#   expose port:
+#       pod
+#       svc
+#       deployment
+
+###COLORLS###
+#LIGHT COLORS#
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+GRAY='\033[0;37m'
+#REGULAR COLORS#
+DGRAY='\033[0;30m'
+BLACK='\033[30m'
+DRED='\033[31m'
+YELLOW='\033[0;33m'
+NC='\033[0m' #No color
+
+###POD STATES###
+PODOK=("Running")
+PODERR=("CrashLoopBackOff" "Error" "Failed" "ImagePullBackOff" "ErrImagePull" "Unknow" "CreateContainerConfigError")
+PODNONE=("Completed" "Terminating" "Init" "Waiting" "Pending")
+
+#TABLEVIEW=$(awk '{printf "%-0s %-5s %-50s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}') #why the fuck it isn't works?..
+
+dbPass(){
+    #in future - make a json map for secrets
+    dbHelp(){
+        echo "Usage:
+    easykube db [namespace] [action]
+Actions:
+    pass - show db password
+    connect - connect to db
+    dump - make db dump"
+        exit 1
+    }
+
+    showDbPass(){
+        echo "$NS DB PASSWORD:"
+        echo $DBPASS
+        exit 0
+    }
+
+    if { [[ $1 =~ "help" ]] || [[ -z $1 || -z $2 ]];  }; then
+        dbHelp
+    fi
+    NS=$1
+    DBPASS=$(kubectl -n $NS get secret db-postgresql -o=jsonpath='{.data.postgresql-password}' | base64 -d)
+
+    case $2 in
+        connect) dbConnect $NS $DBPASS
+        ;;
+        dump) dbDump $NS $DBPASS
+        ;;
+        pass) showDbPass
+        ;;
+        *) echo "Unknow action" && dbHelp && exit 1
+        ;;
+    esac
+
+}
+
+dbConnect(){
+
+    NS=$1
+    DBPASS=$2
+
+    choosePod(){
+        pods=$@
+        echo "Select DB pod"
+        for (( i=0; i<${#pods[@]}; i++ )); do
+            echo "[$i]: ${pods[i]}"
+        done
+        read -r c
+        podDb=${pods[c]}
+    }
+
+    IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods -l app.kubernetes.io/instance=db | grep -v "NAME" | cut -d' ' -f1))
+    case ${#pods[@]} in
+        0) echo "No pods found" && exit 1
+        ;;
+        1) podDb=${pods[0]}
+        ;;
+        *) choosePod ${pods[@]}
+        ;;
+    esac
+
+    if [[ -z $podDb ]]; then
+        choosePod ${pods[@]}
+    fi
+    container=$(kubectl -n $NS get pod $podDb -o=jsonpath={'.spec.containers[0].name'})
+    kubectl -n $NS exec -it $podDb -c $container -- sh -c "PGPASSWORD=$DBPASS psql -U postgres"
+}
+
+dbDump(){
+    NS=$1
+    DBPASS=$2
+
+    choosePod(){
+        pods=$@
+        echo "Select DB pod"
+        for (( i=0; i<${#pods[@]}; i++ )); do
+            echo "[$i]: ${pods[i]}"
+        done
+        read -r c
+        podDb=${pods[c]}
+    }
+
+    IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods -l app.kubernetes.io/instance=db | grep -v "NAME" | cut -d' ' -f1))
+    case ${#pods[@]} in
+        0) echo "No pods found" && exit 1
+        ;;
+        1) podDb=${pods[0]}
+        ;;
+        *) choosePod ${pods[@]}
+        ;;
+    esac
+
+    if [[ -z $podDb ]]; then
+        choosePod ${pods[@]}
+    fi
+
+    echo -e "Enter dir where dump will be placed. Example: /tmp. Default is ./: \c"
+    read -r dumpdir
+    if [[ -z $dumpdir ]]; then
+        dumpdir="./"
+    fi
+
+    if [[ dumpdir == "~" ]]; then
+        if [[ $USER == 'root' ]]; then
+            dumpdir="/root"
+        else
+            dumpdir="/home/$USER"
+        fi
+    fi
+
+    FILE=$dumpdir"/"$NS.$(date +%d"."%m"."%Y).sql.gz
+    container=$(kubectl -n $NS get pod $podDb -o=jsonpath={'.spec.containers[0].name'})
+    echo -e "${BLUE}Dumping DB $NS into $FILE ${NC}"
+    kubectl -n $NS exec $podDb -c $container -- sh -c "PGPASSWORD=$DBPASS pg_dump -U postgres -Z 9 $NS" > $FILE
+    echo "Done"
+
+}
+
+exe(){
+    NS=$1
+    cmd=$2
+
+    exeHelp(){
+        echo "kubectl exec"
+        echo "Usage: easykube [namespace] [command]"
+        exit 1
+    }
+
+    if { [[ $1 =~ "help" ]] || [[ -z $1 || -z $2 ]]; }; then
+        exeHelp
+        exit 1
+    fi
+
+    IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods | grep -v "NAME" |  awk '{print $1"@"$3}'))
+
+    echo "List of pods:"
+    a=0
+    for (( i=0; i<${#pods[@]}; i++ )); do
+
+            pod=$(echo ${pods[i]} | cut -d"@" -f1)
+            podstate=$(echo ${pods[i]} | cut -d"@" -f2)
+
+            if [[ "${PODOK[*]}" =~ "${podstate}" ]]; then
+                echo -e "   ${GREEN} [$a]: $pod${NC}" | awk '{printf "%-0s %-5s %-50s\n" ,$1,$2,$3}'
+                ((a++))
+                exepods+=($pod)
+            elif [[ "${PODNONE[*]}" =~ "${podstate}"  ]]; then
+                echo -e "   ${GRAY} [-]: $pod${NC}" | awk '{printf "%-0s %-5s %-50s\n" ,$1,$2,$3}'
+            else
+                echo -e "   ${RED} [-]: $pod${NC}" | awk '{printf "%-0s %-5s %-50s\n" ,$1,$2,$3}'
+            fi
+    done
+
+    if [[ -z $exepods ]]; then
+        echo -e "\nNo pods available" && exit 1
+    fi
+
+    echo -e "\nSelect number: \c"
+    read -r c
+    pod=${exepods[c]}
+    container=$(kubectl -n $NS get pod $pod -o=jsonpath={'.spec.containers[0].name'})
+    echo ""
+    echo -e "${YELLOW}$pod selected${NC}"
+    echo ""
+    kubectl -n $NS exec -it $pod -c $container -- $cmd 
+    exit 0
+
+}
+
+
+
+podLogs(){
+    NS=$1
+
+    if [[ -z $NS ]]; then
+        echo -e "${RED}Namespace is not defined${NC}"
+        exit 1
+    fi
+
+    if { [[ $1 =~ "help"  || -z $1 ]]; }; then
+        echo "Usage: easykube logs [namespase]"
+        exit 1
+    fi
+
+    if [[ -z $2 ]]; then
+
+        IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods | grep -v "NAME" | awk '{print $1"@"$3}'))
+
+        echo "List of pods:"
+        a=0
+        for (( i=0; i<${#pods[@]}; i++ )); do
+
+            pod=$(echo ${pods[i]} | cut -d"@" -f1)
+            podstate=$(echo ${pods[i]} | cut -d"@" -f2)
+
+            if [[ "${PODOK[*]}" =~ "${podstate}" ]]; then
+                echo -e "   ${GREEN} [$a]: $pod${NC}" | awk '{printf "%-0s %-5s %-50s\n" ,$1,$2,$3}'
+                ((a++))
+                exepods+=($pod)
+            elif [[ "${PODNONE[*]}" =~ "${podstate}"  ]]; then
+                echo -e "   ${GRAY} [-]: $pod${NC}" | awk '{printf "%-0s %-5s %-50s\n" ,$1,$2,$3}'
+            else
+                echo -e "   ${RED} [$a]: $pod${NC}" | awk '{printf "%-0s %-5s %-50s\n" ,$1,$2,$3}'
+                ((a++))
+                exepods+=($pod)
+            fi
+        done
+
+        if [[ -z $exepods ]]; then
+            echo -e "\nNo pods available" && exit 1
+        fi
+
+        echo -e "\nSelect number: \c"
+        read -r c
+        pod=${exepods[c]}
+    else
+        pod=$2
+    fi
+    container=$(kubectl -n $NS get pod $pod -o=jsonpath={'.spec.containers[0].name'})
+    echo ""
+    echo -e "${YELLOW}$pod selected${NC}"
+    echo ""
+    kubectl -n $NS logs $pod $container
+    exit 0
+
+}
+
+checkPods(){
+
+    if { [[ $1 =~ "help" ]] || [[ -z $2 || -z $1 ]]; }; then
+        echo "Usage: easykube check [namespase] [option]"
+        echo "Actions:"
+        echo "  all - show all state pods"
+        echo "  warn - show pods with restarts"
+        echo "  err - show pods with errors"
+        exit 1
+    fi
+
+    afterRun(){
+        exepods=$@
+        if [[ -z $exepods ]]; then
+            echo -e "\nNo pods available" && exit 1
+        fi
+
+        echo -e "Choose pod to view its log or press ^C: \c"
+        read -r b
+
+        podLogs $NS ${exepods[b]}
+    }
+
+    all(){
+        NS=$1
+        a=0
+        for (( i=0; i<${#pods[@]}; i++ )); do
+            pod=$(echo ${pods[i]} | cut -d"@" -f1)
+            podstate=$(echo ${pods[i]} | cut -d"@" -f2)
+            podrestarts=$(echo ${pods[i]} | cut -d"@" -f3)
+            if [[ "${PODOK[*]}" =~ "${podstate}" ]]; then
+               echo -e "   ${GREEN} [$a]: $pod $podstate $podrestarts ${NC}" | awk '{printf "%-0s %-5s %-50s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}'
+                ((a++))
+                exepods+=($pod)
+            elif [[ "${PODNONE[*]}" =~ "${podstate}"  ]]; then
+                echo -e "   ${GRAY} [-]: $pod $podstate $podrestarts ${NC}" | awk '{printf "%-0s %-5s %-50s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}'
+            else
+                echo -e "   ${RED} [$a]: $pod $podstate $podrestarts ${NC}" | awk '{printf "%-0s %-5s %-50s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}'
+                ((a++))
+                exepods+=($pod)
+            fi
+        done
+
+        afterRun ${exepods[@]}
+
+    }
+
+    warn(){
+        a=0
+        for (( i=0; i<${#pods[@]}; i++ )); do
+            pod=$(echo ${pods[i]} | cut -d"@" -f1)
+            podstate=$(echo ${pods[i]} | cut -d"@" -f2)
+            podrestarts=$(echo ${pods[i]} | cut -d"@" -f3)
+            if { [[ "${PODOK[*]}" =~ "${podstate}" && $podrestarts -gt 0 ]]; }; then
+                echo -e "   ${YELLOW}[$a]: $pod $podstate $podrestarts ${NC}" | '{printf "%-0s %-5s %-50s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}'
+                ((a++))
+                exepods+=($pod)
+            fi
+        done
+        afterRun ${exepods[@]}
+    }
+
+    err(){
+        a=0
+        for (( i=0; i<${#pods[@]}; i++ )); do
+            pod=$(echo ${pods[i]} | cut -d"@" -f1)
+            podstate=$(echo ${pods[i]} | cut -d"@" -f2)
+            podrestarts=$(echo ${pods[i]} | cut -d"@" -f3)
+            if [[ "${PODERR[*]}" =~ "${podstate}" ]]; then
+                echo -e "   ${RED}[$a]: $pod $podstate $podrestarts ${NC}" | '{printf "%-0s %-5s %-50s %-25s %-5s %-0s\n" ,$1,$2,$3,$4,$5,$6}'
+                ((a++))
+                exepods+=($pod)
+            fi
+        done
+        afterRun ${exepods[@]}
+    }
+
+    NS=$1
+    if [[ -z $NS ]]; then
+        echo -e "${RED}Namespace is not defined${NC}"
+        exit 1
+    fi
+
+    IFS=" " read -a pods <<< $(echo $(kubectl -n $NS get pods | grep -v "NAME" | awk '{print $1"@"$3"@"$4}'))
+
+    while [ -n $2 ]; do
+        case $2 in
+            err) err
+             ;;
+            warn) warn
+             ;;
+            *) all
+             ;;
+        esac
+    done
+}
+
+expose(){
+    NS=$1
+    kind=$2
+
+    exposeHelp(){
+        echo "Usage: easykube expose [namespace] [kind]"
+        echo "Kinds:"
+        echo "  service, svc, s"
+        echo "  deployment, d"
+        echo "  pod"
+        exit 1
+    }
+
+
+
+    if { [[ $1 =~ "help" ]] || [[ -z $1 || -z $2 ]]; }; then
+        exposeHelp
+    fi
+
+    case $2 in
+        service|svc|c) exposeSvc
+        break ;;
+        deployment|d) exposeDeployment
+        break ;;
+        pod) exposePod
+        break ;;
+        *) exposeHelp
+        break ;;
+    esac
+}
+
+thisHelp(){
+    echo "Easykube."
+    echo "Usage: easykube [option] [arguments]"
+    echo "List of options:"
+    echo "  db"
+    echo "  exe"
+    echo "  check, c"
+    echo "  logs, l"
+    # echo "  expose, e"
+    echo "  help, h"
+    echo "  version, v"
+}
+
+version(){
+    echo "easykube 1.0b"
+}
+
+if [[ $(kubectl config current-context) =~ "prod" ]]; then
+    echo -e "${RED}ATTENTION"
+    echo "PRODUCTION KUBECONFIG IS IN USE"
+    echo -e "PLEASE BE CAREFULL${NC}"
+fi
+
+while [ -n "$1" ]; do
+    case $1 in
+        db) dbPass $2 $3 #ns, next call
+        break ;;
+        exe) exe $2 $3 #ns command
+        break ;;
+        check | c) checkPods $2 $3 #ns
+        break ;;
+        logs | l) podLogs $2
+        break ;;
+        # expose | e) exposePort $2 $3 #ns kind
+        # break ;;
+        version | v) version
+        break ;;
+        *) thisHelp
+        break ;;
+    esac
+done
