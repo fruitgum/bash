@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#LIGHT COLORS#
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+GRAY='\033[0;37m'
+CYAN='\033[0;36m'
+#REGULAR COLORS#
+DGRAY='\033[0;30m'
+BLACK='\033[30m'
+DRED='\033[31m'
+YELLOW='\033[0;33m'
+NC='\033[0m' #No color
+
+
+thisHelp(){
+echo "Usage: 'echo -e \${RED}text\${NC}'"
+echo "Lights colors:"
+echo -e "  ${RED}RED"
+echo -e "  ${GREEN}GREEN"
+echo -e "  ${BLUE}BLUE"
+echo -e "  ${GRAY}GRAY${NC}"
+echo -e "  ${CYAN}CYAN${NC}"
+echo ""
+echo "Regular colors:"
+echo -e "  ${DGRAY}DARK GRAY"
+echo -e "  ${BALCK}BLACK"
+echo -e "  ${DRED}DARK RED"
+echo -e "  ${YELLOW}YELLOW"
+echo ""
+echo -e "${NC}  \${NC} for color reset"
+}
+
+if { [[ $1 == "-h" ]] || [[ $1 == "--help" ]]; }; then
+	thisHelp
+fi
