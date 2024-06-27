@@ -1,0 +1,14 @@
+#!/bin/bash
+###COLORLS###
+#LIGHT COLORS#
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+GRAY='\033[0;37m'
+#REGULAR COLORS#
+DGRAY='\033[0;30m'
+BLACK='\033[30m'
+DRED='\033[31m'
+YELLOW='\033[0;33m'
+#No color
+NC='\033[0m'
